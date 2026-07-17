@@ -1,0 +1,32 @@
+// Top-level block for hardware switches (like the laptop lid)
+switch-events {
+    lid-close { spawn "noctalia" "msg" "session" "lock-and-suspend"; }
+}
+
+binds {
+    // --- KEYBOARD LAYOUT ---
+    Mod+Shift+Space { switch-layout "next"; }
+
+    // --- NOCTALIA CORE UI ---
+    Mod+Space { spawn-sh "noctalia msg panel-toggle launcher"; }
+    Mod+S     { spawn-sh "noctalia msg panel-toggle control-center"; }
+    Mod+Comma { spawn-sh "noctalia msg settings-toggle"; }
+
+    // --- MEDIA & BRIGHTNESS (Triggers Noctalia OSDs) ---
+    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "noctalia msg volume-up"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "noctalia msg volume-down"; }
+    XF86AudioMute        allow-when-locked=true { spawn-sh "noctalia msg volume-mute"; }
+    XF86AudioMicMute     allow-when-locked=true { spawn-sh "noctalia msg mic-mute"; }
+
+    XF86AudioPlay        allow-when-locked=true { spawn-sh "noctalia msg media toggle"; }
+    XF86AudioPause       allow-when-locked=true { spawn-sh "noctalia msg media toggle"; }
+    XF86AudioStop        allow-when-locked=true { spawn-sh "noctalia msg media stop"; }
+    XF86AudioPrev        allow-when-locked=true { spawn-sh "noctalia msg media previous"; }
+    XF86AudioNext        allow-when-locked=true { spawn-sh "noctalia msg media next"; }
+    
+    XF86MonBrightnessUp   allow-when-locked=true { spawn-sh "noctalia msg brightness-up"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn-sh "noctalia msg brightness-down"; }
+
+    // --- APP LAUNCHERS ---
+    
+}
