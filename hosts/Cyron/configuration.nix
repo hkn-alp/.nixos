@@ -9,9 +9,12 @@
     
     # === 2. SYSTEM MODULES ===
     # Root-level daemons, permissions, and core OS interfaces.
-    ../../modules/system/users.nix
-    ../../modules/system/network.nix
     ../../modules/system/audio.nix
+    ../../modules/system/bluetooth.nix
+    ../../modules/system/network.nix
+    ../../modules/system/power.nix
+    ../../modules/system/printing.nix
+    ../../modules/system/users.nix
     
     # Wayland compositor (Niri) and shell (Noctalia) system-level engines.
     ../../modules/shell
