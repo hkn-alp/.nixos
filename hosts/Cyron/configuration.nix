@@ -23,6 +23,7 @@
   # Enable the systemd-boot EFI bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelPackages = pkgs.linuxPackages.latest;
 
   # --- System Identity ---
   # Define the network hostname for this specific machine.
