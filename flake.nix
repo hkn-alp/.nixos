@@ -1,5 +1,5 @@
 {
-  description = "NixOS Flake Configuration";
+  description = "Flake Configuration for NixOS + Noctalia + Niri Setup";
 
   # 1. Global Nix Configuration
   nixConfig = {
