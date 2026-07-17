@@ -1,0 +1,21 @@
+// General App Blur
+window-rule {
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
+// Backdrop & Wallpaper Layering
+layer-rule {
+    match namespace="^noctalia-(backdrop|wallpaper)"
+    place-within-backdrop true
+}
+
+// Shell Surfaces (Bars, Notifications, OSDs)
+layer-rule {
+    match namespace="^noctalia-(bar-[^\"]+|notification|dock|panel|attached-panel|osd)$"
+    background-effect {
+        xray false
+    }
+}
