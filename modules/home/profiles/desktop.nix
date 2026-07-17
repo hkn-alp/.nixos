@@ -21,5 +21,5 @@
 
   # --- Niri ---
   # Links a local config.kdl directly to ~/.config/niri/config.kdl
-  xdg.configFile."niri/config.kdl".source = ./niri-config.kdl;
+  xdg.configFile."niri/config.kdl".source = ./niri/config.kdl;
 }
