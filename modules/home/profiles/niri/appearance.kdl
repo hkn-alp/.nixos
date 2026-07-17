@@ -1,0 +1,22 @@
+// Global UI overrides for Noctalia's visual effects
+layout {
+    background-color "transparent"
+}
+
+overview {
+    workspace-shadow {
+        off
+    }
+}
+
+blur {
+    passes 2
+    offset 3.0
+    noise 0.03
+    saturation 1.0
+}
+
+debug {
+    // Allows Noctalia notifications to focus windows when clicked
+    honor-xdg-activation-with-invalid-serial
+}
