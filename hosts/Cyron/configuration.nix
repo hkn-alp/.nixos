@@ -47,7 +47,7 @@
   # --- Home Manager ---
   # Hand off user-specific configurations (Dotfiles, UI, Themes).
   # Note: 'inputs' is passed down automatically via flake.nix extraSpecialArgs.
-  home-manager.users.hakanalp = import ../../modules/home/hakanalp.nix;
+  home-manager.users.hakanalp = import ../../modules/home/hakanalp-laptop.nix;
 
   # === 5. SYSTEM STATE ===
   
