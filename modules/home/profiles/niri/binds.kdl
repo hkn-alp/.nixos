@@ -4,29 +4,39 @@ switch-events {
 }
 
 binds {
-    // --- KEYBOARD LAYOUT ---
-    Mod+Shift+Space { switch-layout "next"; }
-
     // --- NOCTALIA CORE UI ---
-    Mod+Space { spawn-sh "noctalia msg panel-toggle launcher"; }
-    Mod+S     { spawn-sh "noctalia msg panel-toggle control-center"; }
-    Mod+Comma { spawn-sh "noctalia msg settings-toggle"; }
+    Mod+A hotkey-overlay-title="App Launcher" { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
+    Mod+S hotkey-overlay-title="Settings" { spawn "noctalia" "msg" "settings-toggle"; }
+    Mod+D hotkey-overlay-title="Control Center" { spawn "noctalia" "msg" "panel-toggle" "control-center"; }
 
     // --- MEDIA & BRIGHTNESS (Triggers Noctalia OSDs) ---
-    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "noctalia msg volume-up"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "noctalia msg volume-down"; }
-    XF86AudioMute        allow-when-locked=true { spawn-sh "noctalia msg volume-mute"; }
-    XF86AudioMicMute     allow-when-locked=true { spawn-sh "noctalia msg mic-mute"; }
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-up"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-down"; }
+    XF86AudioMute        allow-when-locked=true { spawn "noctalia" "msg" "volume-mute"; }
+    XF86AudioMicMute     allow-when-locked=true { spawn "noctalia" "msg" "mic-mute"; }
 
-    XF86AudioPlay        allow-when-locked=true { spawn-sh "noctalia msg media toggle"; }
-    XF86AudioPause       allow-when-locked=true { spawn-sh "noctalia msg media toggle"; }
-    XF86AudioStop        allow-when-locked=true { spawn-sh "noctalia msg media stop"; }
-    XF86AudioPrev        allow-when-locked=true { spawn-sh "noctalia msg media previous"; }
-    XF86AudioNext        allow-when-locked=true { spawn-sh "noctalia msg media next"; }
+    XF86AudioPlay        allow-when-locked=true { spawn "noctalia" "msg" "media" "toggle"; }
+    XF86AudioPause       allow-when-locked=true { spawn "noctalia" "msg" "media" "toggle"; }
+    XF86AudioStop        allow-when-locked=true { spawn "noctalia" "msg" "media" "stop"; }
+    XF86AudioPrev        allow-when-locked=true { spawn "noctalia" "msg" "media" "previous"; }
+    XF86AudioNext        allow-when-locked=true { spawn "noctalia" "msg" "media" "next"; }
     
-    XF86MonBrightnessUp   allow-when-locked=true { spawn-sh "noctalia msg brightness-up"; }
-    XF86MonBrightnessDown allow-when-locked=true { spawn-sh "noctalia msg brightness-down"; }
+    XF86MonBrightnessUp   allow-when-locked=true { spawn "noctalia" "msg" "brightness-up"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "noctalia" "msg" "brightness-down"; }
+
+    // --- PRINTSCREEN ---
+    Print { screenshot; }
+    Ctrl+Print { screenshot-screen; }
+    Alt+Print { screenshot-window; }
+    
+    XF86Launch1 { screenshot; }
+    Ctrl+XF86Launch1 { screenshot-screen; }
+    Alt+XF86Launch1 { screenshot-window; }
+
+    // --- LOCK ---
+    Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "noctalia" "msg" "session" "lock"; }
 
     // --- APP LAUNCHERS ---
-    
+    Mod+T hotkey-overlay-title="Launch Terminal" { spawn "alacritty"; }
+    // Mod+E hotkey-overlay-title="Launch File Manager" { spawn "thunar"; }
 }
