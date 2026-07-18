@@ -14,16 +14,16 @@
     # Set a starting password for the first boot
     initialPassword = "password";
     
-    # 'wheel' = sudo access
-    # 'networkmanager' = Wi-Fi controls
-    # 'video' / 'audio' / 'input' = Hardware permissions
-    # 'docker' / 'dialout' = Engineering and container permissions
     extraGroups = [
+      # 'wheel' = sudo access
       "wheel"
+      # 'networkmanager' = Wi-Fi controls
       "networkmanager"
+      # 'video' / 'audio' / 'input' = Hardware permissions
       "video"
       "audio"
       "input"
+      # 'docker' / 'dialout' = Engineering and container permissions
       "docker"
       "dialout"
     ];
