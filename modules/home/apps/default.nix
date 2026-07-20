@@ -1,7 +1,7 @@
 { ... }:
 
 {
-  # The Master App Hub
+  # --- The Master App Hub ---
   # This file simply acts as a bridge to subfolders.
   # Comment out any category to instantly uninstall all apps inside it.
   

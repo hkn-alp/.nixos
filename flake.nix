@@ -14,6 +14,13 @@
     # --- Core OS ---
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    # --- Dendritic Framework ---
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    import-tree.url = "github:vic/import-tree";
+    
+    # --- Wrappers ---
+    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
+
     # --- Home Manager ---
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -28,34 +35,7 @@
   };
 
   # === 3. OUTPUTS (BUILD INSTRUCTIONS) ===
-  outputs = { self, nixpkgs, home-manager, noctalia, noctalia-greeter, ... } @ inputs: {
-    
-    nixosConfigurations = {
-      
-      # --- Cyron Host Configuration ---
-      # Build command: sudo nixos-rebuild switch --flake ~/my-nixos#Cyron
-      Cyron = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        
-        # Pass the 'inputs' variable to all system modules (e.g., /modules/shell/default.nix).
-        specialArgs = { inherit inputs; };
-
-        modules = [
-          # --- System Entry Point ---
-          ./hosts/Cyron/configuration.nix
-          
-          # --- Home Manager Integration ---
-          # Initialize Home Manager as a system-level module.
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            
-            # Pass the 'inputs' variable down to user space (e.g., /modules/home/hakanalp.nix).
-            home-manager.extraSpecialArgs = { inherit inputs; };
-          }
-        ];
-      };
-    };
-  };
+  # import-tree automatically evaluates every file in ./modules
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; }
+    (inputs.import-tree ./modules);
 }

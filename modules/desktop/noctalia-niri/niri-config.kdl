@@ -13,7 +13,7 @@ input {
             // For more information, see xkeyboard-config(7).
 
             // For example:
-            // layout "us,ru"
+            layout "us,tr"
             // options "grp:win_space_toggle,compose:ralt,ctrl:nocaps"
 
             // If this section is empty, niri will fetch xkb settings
@@ -606,12 +606,15 @@ binds {
     // a matching layout switch hotkey configured in xkb options above.
     // Having both at once on the same hotkey will break the switching,
     // since it will switch twice upon pressing the hotkey (once by xkb, once by niri).
-    Mod+Space       { switch-layout "next"; }
-    Mod+Shift+Space { switch-layout "prev"; }
+    Alt+Space       { switch-layout "next"; }
+    Alt+Shift+Space { switch-layout "prev"; }
 
-    // Print { screenshot; }
-    // Ctrl+Print { screenshot-screen; }
-    // Alt+Print { screenshot-window; }
+    Print { screenshot; }
+    Ctrl+Print { screenshot-screen; }
+    Alt+Print { screenshot-window; }
+    XF86Launch1 { screenshot; }
+    Ctrl+XF86Launch1 { screenshot-screen; }
+    Alt+XF86Launch1 { screenshot-window; }
 
     // Applications such as remote-desktop clients and software KVM switches may
     // request that niri stops processing the keyboard shortcuts defined here
@@ -632,8 +635,87 @@ binds {
     Mod+Shift+P { power-off-monitors; }
 }
 
-// Noctalia Set-up
-include optional=true "appearance.kdl"
-include optional=true "rules.kdl"
-include optional=true "binds.kdl"
-include optional=true "noctalia.kdl"
+// ==========================================
+// NOCTALIA INTEGRATION 
+// ==========================================
+
+// --- Appearance Overrides ---
+layout {
+    background-color "transparent"
+}
+
+overview {
+    workspace-shadow {
+        off
+    }
+}
+
+blur {
+    passes 2
+    offset 3.0
+    noise 0.03
+    saturation 1.0
+}
+
+debug {
+    // Allows Noctalia notifications to focus windows when clicked
+    honor-xdg-activation-with-invalid-serial
+}
+
+// --- Window & Layer Rules ---
+// General App Blur
+window-rule {
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
+// Backdrop & Wallpaper Layering
+layer-rule {
+    match namespace="^noctalia-(backdrop|wallpaper)"
+    place-within-backdrop true
+}
+
+// Shell Surfaces (Bars, Notifications, OSDs)
+layer-rule {
+    match namespace="^noctalia-(bar-[^\"]+|notification|dock|panel|attached-panel|osd)$"
+    background-effect {
+        xray false
+    }
+}
+
+// --- Noctalia Binds ---
+// Top-level block for hardware switches (like the laptop lid)
+switch-events {
+    lid-close { spawn "noctalia" "msg" "session" "lock-and-suspend"; }
+}
+
+binds {
+    // --- NOCTALIA CORE UI ---
+    Mod+Space hotkey-overlay-title="App Launcher" { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
+    Mod+S hotkey-overlay-title="Settings" { spawn "noctalia" "msg" "settings-toggle"; }
+    Mod+D hotkey-overlay-title="Control Center" { spawn "noctalia" "msg" "panel-toggle" "control-center"; }
+    Alt+Tab { spawn "noctalia" "msg" "window-switcher"; }
+
+    // --- MEDIA & BRIGHTNESS (Triggers Noctalia OSDs) ---
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-up"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-down"; }
+    XF86AudioMute        allow-when-locked=true { spawn "noctalia" "msg" "volume-mute"; }
+    XF86AudioMicMute     allow-when-locked=true { spawn "noctalia" "msg" "mic-mute"; }
+
+    XF86AudioPlay        allow-when-locked=true { spawn "noctalia" "msg" "media" "toggle"; }
+    XF86AudioPause       allow-when-locked=true { spawn "noctalia" "msg" "media" "toggle"; }
+    XF86AudioStop        allow-when-locked=true { spawn "noctalia" "msg" "media" "stop"; }
+    XF86AudioPrev        allow-when-locked=true { spawn "noctalia" "msg" "media" "previous"; }
+    XF86AudioNext        allow-when-locked=true { spawn "noctalia" "msg" "media" "next"; }
+    
+    XF86MonBrightnessUp   allow-when-locked=true { spawn "noctalia" "msg" "brightness-up"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "noctalia" "msg" "brightness-down"; }
+
+    // --- LOCK ---
+    Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "noctalia" "msg" "session" "lock"; }
+
+    // --- APP LAUNCHERS ---
+    Mod+T hotkey-overlay-title="Launch Terminal" { spawn "alacritty"; }
+}
