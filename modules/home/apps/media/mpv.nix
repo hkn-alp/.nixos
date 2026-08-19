@@ -1,5 +1,5 @@
-{ pkgs, ... }:
-
-{
-  programs.mpv.enable = true;
+{ ... }: {
+  flake.homeModules.media.mpv = {
+    programs.mpv.enable = true;
+  };
 }

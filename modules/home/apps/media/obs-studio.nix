@@ -1,5 +1,5 @@
-{ pkgs, ... }:
-
-{
-  programs.obs-studio.enable = true;
+{ ... }: {
+  flake.homeModules.media.obsStudio = {
+    programs.obs-studio.enable = true;
+  };
 }

@@ -1,7 +1,5 @@
-{ pkgs, ... }:
-
-{
-  home.packages = with pkgs;[
-    simple-scan
-  ];
+{ ... }: {
+  flake.homeModules.office.simpleScan = { pkgs, ... }: {
+    home.packages = [ pkgs.simple-scan ];
+  };
 }

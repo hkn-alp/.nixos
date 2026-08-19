@@ -1,7 +1,5 @@
-{ pkgs, ... }:
-
-{
-  home.packages = with pkgs; [
-    snapshot
-  ];
+{ ... }: {
+  flake.homeModules.media.snapshot = { pkgs, ... }: {
+    home.packages = [ pkgs.snapshot ];
+  };
 }

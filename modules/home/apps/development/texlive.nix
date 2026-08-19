@@ -1,7 +1,5 @@
-{ pkgs, ... }:
-
-{
-  home.packages = with pkgs; [
-    texlive.combined.scheme-full
-  ];
+{ ... }: {
+  flake.homeModules.development.texlive = { pkgs, ... }: {
+    home.packages = [ pkgs.texlive.combined.scheme-full ];
+  };
 }

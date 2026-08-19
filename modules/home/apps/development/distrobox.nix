@@ -1,7 +1,5 @@
-{ pkgs, ... }:
-
-{
-  home.packages = with pkgs; [
-    distrobox
-  ];
+{ ... }: {
+  flake.homeModules.development.distrobox = { pkgs, ... }: {
+    home.packages = [ pkgs.distrobox ];
+  };
 }

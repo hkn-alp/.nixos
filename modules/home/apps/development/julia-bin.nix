@@ -1,7 +1,5 @@
-{ pkgs, ... }:
-
-{
-  home.packages = with pkgs; [
-    julia-bin
-  ];
+{ ... }: {
+  flake.homeModules.development.julia = { pkgs, ... }: {
+    home.packages = [ pkgs.julia-bin ];
+  };
 }

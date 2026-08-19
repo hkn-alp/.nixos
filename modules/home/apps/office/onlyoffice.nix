@@ -1,7 +1,5 @@
-{ pkgs, ... }:
-
-{
-  home.packages = with pkgs;[
-    onlyoffice-bin
-  ];
+{ ... }: {
+  flake.homeModules.office.onlyoffice = { pkgs, ... }: {
+    home.packages = [ pkgs.onlyoffice-bin ];
+  };
 }

@@ -1,7 +1,5 @@
-{ pkgs, ... }:
-
-{
-  home.packages = with pkgs; [
-    texstudio
-  ];
+{ ... }: {
+  flake.homeModules.development.texstudio = { pkgs, ... }: {
+    home.packages = [ pkgs.texstudio ];
+  };
 }

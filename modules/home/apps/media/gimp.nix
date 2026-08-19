@@ -1,7 +1,5 @@
-{ pkgs, ... }:
-
-{
-  home.packages = with pkgs; [
-    gimp
-  ];
+{ ... }: {
+  flake.homeModules.media.gimp = { pkgs, ... }: {
+    home.packages = [ pkgs.gimp ];
+  };
 }

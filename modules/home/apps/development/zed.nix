@@ -1,7 +1,5 @@
-{ pkgs, ... }:
-
-{
-  home.packages = with pkgs; [
-    zed-editor
-  ];
+{ ... }: {
+  flake.homeModules.development.zed = { pkgs, ... }: {
+    home.packages = [ pkgs.zed-editor ];
+  };
 }

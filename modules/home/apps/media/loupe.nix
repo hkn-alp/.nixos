@@ -1,7 +1,5 @@
-{ pkgs, ... }:
-
-{
-  home.packages = with pkgs; [
-    loupe
-  ];
+{ ... }: {
+  flake.homeModules.media.loupe = { pkgs, ... }: {
+    home.packages = [ pkgs.loupe ];
+  };
 }

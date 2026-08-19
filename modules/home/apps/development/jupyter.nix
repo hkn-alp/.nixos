@@ -1,7 +1,5 @@
-{ pkgs, ... }:
-
-{
-  home.packages = with pkgs; [
-    jupyter
-  ];
+{ ... }: {
+  flake.homeModules.development.jupyter = { pkgs, ... }: {
+    home.packages = [ pkgs.jupyter ];
+  };
 }

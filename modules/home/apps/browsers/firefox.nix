@@ -1,5 +1,5 @@
-{ pkgs, ... }:
-
-{
-  programs.firefox.enable = true;
+{ ... }: {
+  flake.homeModules.browsers.firefox = {
+    programs.firefox.enable = true;
+  };
 }
