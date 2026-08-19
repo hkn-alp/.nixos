@@ -1,39 +1,87 @@
 # modules/system/gaming.nix
 { self, inputs, ... }: {
 
-  flake.nixosModules.system.gaming = { config, pkgs, ... }: {
+  flake.nixosModules.system.gaming = { config, pkgs, lib, ... }: {
     
-    # === 1. GAMING SUBSYSTEM ===
-    
-    # --- Performance ---
-    # Enable Feral Interactive's GameMode for system optimizations during gameplay
-    programs.gamemode.enable = true;
-    
-    # --- Graphics Drivers ---
-    # Steam and many older games require 32-bit OpenGL support
-    hardware.graphics.enable32Bit = true;
+    # === 1. UNFREE PERMISSION FOR STEAM-RUN ===
+    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+      "steam-run"
+    ];
 
-    # --- Steam ---
-    programs.steam = {
+    # === 2. GRAPHICS & 32-BIT SUPPORT ===
+    hardware.graphics = {
       enable = true;
-      # Open ports in the firewall for Steam Remote Play
-      remotePlay.openFirewall = true; 
-      # Open ports in the firewall for Source Dedicated Server
-      dedicatedServer.openFirewall = true; 
+      enable32Bit = true;
     };
 
-    # --- Launchers, Emulators & Comms ---
+    # === 3. GAMEMODE & PERFORMANCE ===
+    programs.gamemode = {
+      enable = true;
+      settings = {
+        general = {
+          inhibit_screensaver = 0;
+        };
+      };
+    };
+
+    # === 4. GAMESCOPE COMPOSITOR ===
+    programs.gamescope = {
+      enable = true;
+      capSysNice = true;
+      enableWsi = true;
+    };
+
+    # === 5. ESYNC & SYSTEMD FILE DESCRIPTOR LIMITS ===
+    systemd.settings.Manager = {
+      DefaultLimitNOFILE = "524288";
+    };
+    security.pam.loginLimits = [
+      {
+        domain = "hakanalp";
+        type = "hard";
+        item = "nofile";
+        value = "524288";
+      }
+    ];
+
+    # === 6. CONTROLLER UDEV RULES ===
+    services.udev.extraRules = ''
+      # 8BitDo Ultimate Controller
+      SUBSYSTEM=="input", ATTRS{idVendor}=="2dc8", ATTRS{idProduct}=="3106", MODE="0660", GROUP="input"
+      # Universal rule for generic gaming HID pads
+      KERNEL=="hidraw*", ATTRS{idVendor}=="2dc8", MODE="0660", GROUP="input"
+    '';
+
+    # === 7. OVERLAYS & STEAM-RUN COMPATIBILITY ===
+    nixpkgs.overlays = [
+      (final: prev: {
+        steam-run = (prev.steam.override {
+          extraLibraries = pkgs': with pkgs'; [
+            libxkbcommon
+            mesa
+            wayland
+            (sndio.overrideAttrs (old: {
+              postFixup = (old.postFixup or "") + ''
+                ln -s $out/lib/libsndio.so $out/lib/libsndio.so.6.1
+              '';
+            }))
+          ];
+        }).run;
+      })
+    ];
+
+    # === 8. UTILITIES & EMULATORS ===
     environment.systemPackages = with pkgs; [
-      heroic             # Launcher for Epic Games / GOG
-      lutris             # General game manager/runner
-      protonup-qt        # GUI for managing custom Proton versions (e.g., GE-Proton)
+      steam-run
+      protonup-qt
+      mangohud
       
       # RetroArch with bundled cores
       (retroarch.override {
         cores = with libretro; [
-          puae           # Amiga 500
-          scummvm        # Classic point-and-click adventures
-          dosbox         # MS-DOS
+          puae
+          scummvm
+          dosbox
         ];
       })
     ];

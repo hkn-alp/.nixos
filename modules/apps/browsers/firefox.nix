@@ -1,5 +1,5 @@
 { ... }: {
-  flake.homeModules.browsers.firefox = {
+  flake.nixosModules.apps.browsers.firefox = {
     programs.firefox.enable = true;
   };
 }

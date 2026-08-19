@@ -6,7 +6,6 @@
     specialArgs = { inherit self inputs; };
     modules = [
       inputs.disko.nixosModules.disko
-      inputs.home-manager.nixosModules.home-manager
       self.nixosModules.disko
       self.nixosModules.cyronConfiguration
     ];
@@ -17,8 +16,10 @@
       (self.nixosModules.cyronHardware or {})
       (self.nixosModules.cyronNvidia or {})
     ] 
-    # Automatically wire every general system module
-    ++ (builtins.attrValues (self.nixosModules.system or {}));
+    # Collects all system, desktop, and app modules automatically
+    ++ (lib.collect builtins.isAttrs (self.nixosModules.system or {}))
+    ++ (lib.collect builtins.isAttrs (self.nixosModules.apps or {}))
+    ++ (lib.collect builtins.isAttrs (self.nixosModules.desktop or {}));
 
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
@@ -31,13 +32,5 @@
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
     hardware.graphics.enable = true;
     system.stateVersion = "26.05";
-
-    home-manager.useGlobalPkgs = true;
-    home-manager.useUserPackages = true;
-    home-manager.users.hakanalp = {
-      home.stateVersion = "26.05";
-      # Recursively auto-import every dendritic home module into the user environment
-      imports = lib.collect builtins.isAttrs (self.homeModules or {});
-    };
   };
 }

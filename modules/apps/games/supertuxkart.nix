@@ -1,6 +1,6 @@
 { ... }: {
-  flake.homeModules.games.supertuxkart = { pkgs, ... }: {
-    home.packages = [
+  flake.nixosModules.apps.games.supertuxkart = { pkgs, ... }: {
+    environment.systemPackages = [
       (pkgs.symlinkJoin {
         name = "supertuxkart-nvidia";
         paths = [ pkgs.supertuxkart ];
