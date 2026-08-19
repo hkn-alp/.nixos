@@ -61,10 +61,10 @@ polkit_agent = true
     
     [shell.panel]
     control_center_placement = "floating"
-    launcher_placement = 'attached'
+    launcher_placement = "attached"
 
 [theme]
-mode = dark
+mode = "dark"
 source = "wallpaper"
 
     [theme.templates]
@@ -86,7 +86,7 @@ path = "~/.nixos/assets/wallpapers/Mostar.jpg"
 
 [widget.clock]
 format = "{:%Y-%m-%d, %H:%M:%S}"
-scale = = 0.9
+scale = 0.9
 
 [widget.media]
 album_art_only = true

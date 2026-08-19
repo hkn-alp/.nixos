@@ -1,50 +1,46 @@
 # modules/hosts/Cyron/configuration.nix
-{ self, ... }: {
+{ self, inputs, ... }: {
+
+  # Expose the top-level NixOS system for flake build targets
+  flake.nixosConfigurations.Cyron = inputs.nixpkgs.lib.nixosSystem {
+    system = "x86_64-linux";
+    specialArgs = { inherit self inputs; };
+    modules = [
+      inputs.disko.nixosModules.disko
+      inputs.home-manager.nixosModules.home-manager
+      ./disko-config.nix
+      self.nixosModules.cyronConfiguration
+    ];
+  };
 
   flake.nixosModules.cyronConfiguration = { pkgs, config, lib, ... }: {
-    
-    # === 1. SYSTEM MODULES & IMPORTS ===
     imports = [
-      # Auto-generated hardware scan for the physical laptop.
-      self.nixosModules.cyronHardware
+      # Auto-generated hardware scan (if available in live install, else disko handles mounts)
+      (self.nixosModules.cyronHardware or {})
     ] 
-    # Automatically import EVERY other system module defined in the flake
-    ++ (builtins.attrValues self.nixosModules.system);
+    ++ (builtins.attrValues (self.nixosModules.system or {}));
 
-    # === 2. HOST-SPECIFIC SETTINGS ===
-    
-    # --- Bootloader ---
-    # Enable the systemd-boot EFI bootloader.
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
     boot.kernelPackages = pkgs.linuxPackages.latest;
 
-    # --- System Identity ---
-    # Define the network hostname for this specific machine.
     networking.hostName = "Cyron";
-
-    # --- Timezone & Locale ---
-    # Define regional settings for time and language.
     time.timeZone = "Europe/Istanbul";
     i18n.defaultLocale = "en_US.UTF-8";
 
-    # --- Graphics (GTX 1650) ---
-    # Enable open-source Mesa/Nouveau drivers built into the kernel.
-    hardware.graphics.enable = true;
+    # Experimental features enabled system-wide
+    nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-    # === 3. SYSTEM STATE ===
-    
-    # --- State Version ---
-    # The permanent birth certificate of the machine. Do not change this number.
+    hardware.graphics.enable = true;
     system.stateVersion = "26.05";
-    
-    # === 4. USER SPACE ===
-    
-    # --- Home Manager ---
-    # Hand off user-specific configurations (Dotfiles, UI, Themes).
+
+    home-manager.useGlobalPkgs = true;
+    home-manager.useUserPackages = true;
     home-manager.users.hakanalp = {
-      # Automatically import all Home modules defined in the flake
-      imports = builtins.attrValues self.homeModules;
+      home.stateVersion = "26.05";
+      imports = [
+        ../../home/apps
+      ];
     };
   };
 }
