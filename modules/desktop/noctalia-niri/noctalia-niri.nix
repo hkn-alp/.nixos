@@ -14,8 +14,6 @@
       systemd.enable = true;
       recommendedServices.enable = true;
       package = self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia-niri;
-      
-      settings = { launch_apps_as_systemd_services = true; };
     };
     
     # Enable Noctalia Greeter

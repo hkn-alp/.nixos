@@ -47,5 +47,4 @@
       imports = builtins.attrValues self.homeModules;
     };
   };
-
 }

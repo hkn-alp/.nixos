@@ -52,7 +52,7 @@ show_dots = true
 [shell]
 date_format = "%Y-%m-%d, %A"
 time_format = "%Y-%m-%d, %A"
-launch_apps_as_systemd_servies = true
+launch_apps_as_systemd_services = true
 niri_overview_type_to_launch_enabled = true
 polkit_agent = true
 
@@ -82,7 +82,7 @@ source = "wallpaper"
     ]
 
 [wallpaper.default]
-path = "~/.nixos/assets/wallpapers/Mostar.png"
+path = "~/.nixos/assets/wallpapers/Mostar.jpg"
 
 [widget.clock]
 format = "{:%Y-%m-%d, %H:%M:%S}"
@@ -106,5 +106,5 @@ show_label = false
 show_condition = false
 show_temperature = false
 
-widget.workspace]
+[widget.workspace]
 display = "none"
