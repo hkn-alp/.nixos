@@ -2,7 +2,7 @@
 { self, inputs, ... }: {
   
   # === 1. THE SYSTEM DESKTOP MODULE ===
-  flake.nixosModules.desktop = { config, pkgs, lib, ... }: {
+  flake.modules.system.noctalia-niri = { config, pkgs, lib, ... }: {
     imports = [ 
       inputs.noctalia.nixosModules.default 
       inputs.noctalia-greeter.nixosModules.default

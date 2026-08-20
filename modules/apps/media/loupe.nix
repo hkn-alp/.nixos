@@ -1,5 +1,5 @@
 { ... }: {
-  flake.nixosModules.apps.media.loupe = { pkgs, ... }: {
+  flake.modules.apps.media.loupe = { pkgs, ... }: {
     environment.systemPackages = [ pkgs.loupe ];
   };
 }

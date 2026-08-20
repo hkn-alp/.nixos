@@ -1,7 +1,7 @@
 # modules/system/bash.nix
 { self, inputs, ... }: {
 
-  flake.nixosModules.system.bash = { config, pkgs, ... }: {
+  flake.modules.system.bash = { config, pkgs, ... }: {
     
     programs.bash.interactiveShellInit = ''
       nix-test() {

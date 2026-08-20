@@ -1,7 +1,7 @@
 # modules/system/users.nix
 { self, inputs, ... }: {
 
-  flake.nixosModules.system.users = { config, pkgs, ... }: {
+  flake.modules.system.users = { config, pkgs, ... }: {
     
     users.users.hakanalp = {
       isNormalUser = true;

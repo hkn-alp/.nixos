@@ -1,5 +1,5 @@
 { ... }: {
-  flake.nixosModules.apps.development.texstudio = { pkgs, ... }: {
+  flake.modules.apps.development.texstudio = { pkgs, ... }: {
     environment.systemPackages = [ pkgs.texstudio ];
   };
 }

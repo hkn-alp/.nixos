@@ -1,7 +1,7 @@
 # modules/system/maintenance.nix
 { self, inputs, ... }: {
 
-  flake.nixosModules.system.maintenance = { config, pkgs, ... }: {
+  flake.modules.system.maintenance = { config, pkgs, ... }: {
     
     # === 1. DRIVE MEMORY SAVER (GARBAGE COLLECTION) ===
     nix.settings.auto-optimise-store = true;

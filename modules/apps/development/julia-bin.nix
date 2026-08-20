@@ -1,5 +1,5 @@
 { ... }: {
-  flake.nixosModules.apps.development.julia = { pkgs, ... }: {
+  flake.modules.apps.development.julia = { pkgs, ... }: {
     environment.systemPackages = [ pkgs.julia-bin ];
   };
 }

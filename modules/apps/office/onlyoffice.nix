@@ -1,5 +1,5 @@
 { ... }: {
-  flake.nixosModules.apps.office.onlyoffice = { pkgs, lib, ... }: {
+  flake.modules.apps.office.onlyoffice = { pkgs, lib, ... }: {
     nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
       "onlyoffice-bin"
     ];

@@ -1,6 +1,6 @@
 # modules/apps/games/steam.nix
 { ... }: {
-  flake.nixosModules.apps.games.steam = { pkgs, lib, ... }: {
+  flake.modules.apps.games.steam = { pkgs, lib, ... }: {
     nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
       "steam"
       "steam-unwrapped"

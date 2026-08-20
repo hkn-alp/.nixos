@@ -1,5 +1,5 @@
 { ... }: {
-  flake.nixosModules.apps.media.mpv = {
+  flake.modules.apps.media.mpv = {
     programs.mpv.enable = true;
   };
 }

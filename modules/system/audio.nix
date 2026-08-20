@@ -1,7 +1,7 @@
 # modules/system/audio.nix
 { self, inputs, ... }: {
 
-  flake.nixosModules.system.audio = { config, pkgs, ... }: {
+  flake.modules.system.audio = { config, pkgs, ... }: {
     
     # === 1. AUDIO SUBSYSTEM ===
     

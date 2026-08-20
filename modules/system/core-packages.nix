@@ -1,7 +1,7 @@
 # modules/system/core-packages.nix
 { self, inputs, ... }: {
 
-  flake.nixosModules.system.corePackages = { pkgs, ... }: {
+  flake.modules.system.corePackages = { pkgs, ... }: {
     
     # === 1. EMERGENCY & CORE UTILITIES ===
     

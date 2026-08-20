@@ -1,6 +1,6 @@
 # modules/apps/games/lutris.nix
 { ... }: {
-  flake.nixosModules.apps.games.lutris = { pkgs, ... }: {
+  flake.modules.apps.games.lutris = { pkgs, ... }: {
     environment.systemPackages = [
       (pkgs.lutris.override {
         extraLibraries = pkgs': with pkgs'; [

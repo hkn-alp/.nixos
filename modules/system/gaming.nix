@@ -1,7 +1,7 @@
 # modules/system/gaming.nix
 { self, inputs, ... }: {
   
-  flake.nixosModules.system.gaming = { config, pkgs, lib, ... }: {
+  flake.modules.system.gaming = { config, pkgs, lib, ... }: {
     
     # === 1. UNFREE PERMISSION FOR STEAM-RUN ===
     nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [

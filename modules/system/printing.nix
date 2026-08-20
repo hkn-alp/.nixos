@@ -1,7 +1,7 @@
 # modules/system/printing.nix
 { self, inputs, ... }: {
 
-  flake.nixosModules.system.printing = { config, pkgs, ... }: {
+  flake.modules.system.printing = { config, pkgs, ... }: {
     
     # === 1. PRINTER DAEMONS ===
     services.printing.enable = true;

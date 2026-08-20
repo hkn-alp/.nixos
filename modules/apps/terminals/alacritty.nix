@@ -1,5 +1,5 @@
 { ... }: {
-  flake.nixosModules.apps.terminals.alacritty = { pkgs, ... }: {
+  flake.modules.apps.terminals.alacritty = { pkgs, ... }: {
     environment.systemPackages = [ pkgs.alacritty ];
   };
 }

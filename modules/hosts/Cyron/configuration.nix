@@ -17,9 +17,8 @@
       # Directly import the raw file from outside the modules tree
       ../../../hardware/Cyron.nix
     ] 
-    ++ (lib.collect builtins.isAttrs (self.nixosModules.system or {}))
-    ++ (lib.collect builtins.isAttrs (self.nixosModules.apps or {}))
-    ++ (lib.collect builtins.isAttrs (self.nixosModules.desktop or {}));
+    ++ (lib.collect builtins.isFunction (self.modules.system or {}))
+    ++ (lib.collect builtins.isFunction (self.modules.apps or {}));
 
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
