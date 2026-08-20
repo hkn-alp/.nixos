@@ -6,12 +6,12 @@
     specialArgs = { inherit self inputs; };
     modules = [
       inputs.disko.nixosModules.disko
-      self.nixosModules.VM.configuration
-      self.nixosModules.VM.disko
+      self.nixosModules.VM-config
+      self.nixosModules.VM-disko
     ];
   };
 
-  flake.nixosModules.VM.configuration = { pkgs, ... }: {
+  flake.nixosModules.VM-config = { pkgs, ... }: {
     imports = [
       # Directly import the raw file from outside the modules tree
       ../../../hardware/VM.nix

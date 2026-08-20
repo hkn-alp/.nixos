@@ -1,6 +1,6 @@
 # modules/hosts/VM/disko-config.nix
 { ... }: {
-  flake.nixosModules.VM.disko = {
+  flake.nixosModules.VM-disko = {
     disko.devices = {
       disk.main = {
         device = "/dev/vda"; # Standard virtual disk identifier for KVM / GNOME Boxes

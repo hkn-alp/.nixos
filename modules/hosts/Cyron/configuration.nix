@@ -6,13 +6,13 @@
     specialArgs = { inherit self inputs; };
     modules = [
       inputs.disko.nixosModules.disko
-      self.nixosModules.Cyron.configuration
-      self.nixosModules.Cyron.disko
-      self.nixosModules.Cyron.nvidia
+      self.nixosModules.Cyron-config
+      self.nixosModules.Cyron-disko
+      self.nixosModules.Cyron-nvidia
     ];
   };
 
-  flake.nixosModules.Cyron.configuration = { pkgs, ... }: {
+  flake.nixosModules.Cyron-config = { pkgs, ... }: {
     imports = [
       # Directly import the raw file from outside the modules tree
       ../../../hardware/Cyron.nix
