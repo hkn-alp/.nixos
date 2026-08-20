@@ -31,14 +31,23 @@
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } ({ lib, ... }: {
-    systems = [ "x86_64-linux" ];
+    
+    # 1. Imports can safely stay at the top level
     imports = [ (inputs.import-tree ./modules) ];
 
-    # Tell flake-parts that flake.modules is a deeply mergeable attribute set
-    options.flake.modules = lib.mkOption {
-      type = lib.types.attrs;
-      default = {};
-      description = "Custom heavily nested modules tree";
+    # 2. The explicit options declaration
+    options = {
+      flake.modules = lib.mkOption {
+        type = lib.types.attrs;
+        default = {};
+        description = "Custom heavily nested modules tree";
+      };
     };
+
+    # 3. All assigned configuration values must move inside here
+    config = {
+      systems = [ "x86_64-linux" ];
+    };
+
   });
 }
