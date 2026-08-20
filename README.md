@@ -34,6 +34,13 @@ sudo nix --experimental-features "nix-command flakes" run github:nix-community/d
 ```
 *(Enter your chosen LUKS encryption password when prompted).*
 
+**Verify patitions:**
+To ensure Disko successfully formatted and mounted your drives, check the block device layout:
+```bash
+lsblk
+```
+*(You should see your main drive divided into ESP, a decrypted cryptroot LUKS container with your Btrfs subvolumes mounted under /mnt, and a swap partition).*
+
 ---
 
 ### Step 3: Install NixOS
@@ -41,12 +48,6 @@ Install the entire system referencing the remote flake directly:
 
 ```bash
 sudo nixos-install --flake "github:hkn-alp/.nixos#Cyron" --no-root-passwd
-```
-
-**Verify patitions:**
-To ensure Disko successfully formatted and mounted your drives, check the block device layout:
-```bash
-lsblk
 ```
 
 ---
