@@ -6,8 +6,8 @@
     specialArgs = { inherit self inputs; };
     modules = [
       inputs.disko.nixosModules.disko
-      self.nixosModules.Cyron.disko
       self.nixosModules.Cyron.configuration
+      self.nixosModules.Cyron.disko
       self.nixosModules.Cyron.nvidia
     ];
   };
@@ -16,7 +16,6 @@
     imports = [
       # Directly import the raw file from outside the modules tree
       ../../../hardware/Cyron.nix
-      (self.nixosModules.Cyron.nvidia or {})
     ] 
     ++ (lib.collect builtins.isAttrs (self.nixosModules.system or {}))
     ++ (lib.collect builtins.isAttrs (self.nixosModules.apps or {}))

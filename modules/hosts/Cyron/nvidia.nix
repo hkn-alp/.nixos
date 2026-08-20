@@ -1,6 +1,6 @@
 # modules/hosts/Cyron/nvidia.nix
 { ... }: {
-  flake.nixosModules.Cyron.Nvidia = { pkgs, lib, ... }: {
+  flake.nixosModules.Cyron.nvidia = { pkgs, lib, ... }: {
     hardware.graphics = {
       enable = true;
       enable32Bit = true;

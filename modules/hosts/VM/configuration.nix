@@ -6,8 +6,8 @@
     specialArgs = { inherit self inputs; };
     modules = [
       inputs.disko.nixosModules.disko
-      self.nixosModules.VM.disko
       self.nixosModules.VM.configuration
+      self.nixosModules.VM.disko
     ];
   };
 
