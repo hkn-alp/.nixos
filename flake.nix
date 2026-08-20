@@ -30,8 +30,15 @@
     noctalia-greeter.url = "github:noctalia-dev/noctalia-greeter";
   };
 
-  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } ({ lib, ... }: {
     systems = [ "x86_64-linux" ];
     imports = [ (inputs.import-tree ./modules) ];
-  };
+
+    # Tell flake-parts that flake.modules is a deeply mergeable attribute set
+    options.flake.modules = lib.mkOption {
+      type = lib.types.attrs;
+      default = {};
+      description = "Custom heavily nested modules tree";
+    };
+  });
 }
