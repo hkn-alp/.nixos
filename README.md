@@ -34,7 +34,7 @@ sudo nix --experimental-features "nix-command flakes" run github:nix-community/d
 ```
 *(Enter your chosen LUKS encryption password when prompted).*
 
-**Verify patitions:**
+**Verify partitions:**
 To ensure Disko successfully formatted and mounted your drives, check the block device layout:
 ```bash
 lsblk
@@ -137,7 +137,7 @@ Because NixOS flakes evaluate exactly what is in your Git repository, you cannot
      --flake .#NewHost
    ```
 
-**Verify patitions:**
+**Verify partitions:**
 To ensure Disko successfully formatted and mounted your drives, check the block device layout:
 ```bash
 lsblk
