@@ -1,4 +1,4 @@
-# modules/hosts/Cyron/configuration.nix
+# modules/hosts/VM/configuration.nix
 { self, inputs, lib, ... }: {
 
   flake.nixosConfigurations.VM = inputs.nixpkgs.lib.nixosSystem {
@@ -6,16 +6,16 @@
     specialArgs = { inherit self inputs; };
     modules = [
       inputs.disko.nixosModules.disko
-      self.nixosModules.disko
-      self.nixosModules.cyronConfiguration
+      self.nixosModules.VM.disko
+      self.nixosModules.VM.configuration
     ];
   };
 
-  flake.nixosModules.cyronConfiguration = { pkgs, ... }: {
+  flake.nixosModules.VM.configuration = { pkgs, ... }: {
     imports = [
-      (self.nixosModules.vmHardware or {})
+      # Directly import the raw file from outside the modules tree
+      ../../../hardware/VM.nix
     ] 
-    # Collects all system, desktop, and app modules automatically
     ++ (lib.collect builtins.isAttrs (self.nixosModules.system or {}))
     ++ (lib.collect builtins.isAttrs (self.nixosModules.apps or {}))
     ++ (lib.collect builtins.isAttrs (self.nixosModules.desktop or {}));

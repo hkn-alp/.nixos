@@ -1,6 +1,6 @@
 # modules/hosts/Cyron/disko-config.nix
 { ... }: {
-  flake.nixosModules.disko = {
+  flake.nixosModules.Cyron.disko = {
     disko.devices = {
       disk.main = {
         device = "/dev/nvme0n1";

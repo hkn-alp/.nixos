@@ -127,10 +127,10 @@ Because NixOS flakes evaluate exactly what is in your Git repository, you cannot
    ```
 
 6. **Generate the Hardware Config:**
-   Now that the drives are mounted, generate the hardware profile directly into your new host folder:
+   Now that the drives are mounted, generate the hardware profile directly into your new hardware folder:
    ```bash
    sudo nixos-generate-config --root /mnt --dir /tmp
-   cp /tmp/hardware-configuration.nix modules/hosts/NewHost/
+   cp /tmp/hardware-configuration.nix hardware/NewHost.nix
    ```
 
 7. **Track Files in Git (Crucial):**

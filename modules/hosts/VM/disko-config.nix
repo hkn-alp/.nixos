@@ -1,9 +1,9 @@
-# modules/hosts/Cyron/disko-config.nix
+# modules/hosts/VM/disko-config.nix
 { ... }: {
-  flake.nixosModules.disko = {
+  flake.nixosModules.VM.disko = {
     disko.devices = {
       disk.main = {
-        device = "/dev/nvme0n1";
+        device = "/dev/vda"; # Standard virtual disk identifier for KVM / GNOME Boxes
         type = "disk";
         content = {
           type = "gpt";

@@ -6,17 +6,18 @@
     specialArgs = { inherit self inputs; };
     modules = [
       inputs.disko.nixosModules.disko
-      self.nixosModules.disko
-      self.nixosModules.cyronConfiguration
+      self.nixosModules.Cyron.disko
+      self.nixosModules.Cyron.configuration
+      self.nixosModules.Cyron.nvidia
     ];
   };
 
-  flake.nixosModules.cyronConfiguration = { pkgs, ... }: {
+  flake.nixosModules.Cyron.configuration = { pkgs, ... }: {
     imports = [
-      (self.nixosModules.cyronHardware or {})
-      (self.nixosModules.cyronNvidia or {})
+      # Directly import the raw file from outside the modules tree
+      ../../../hardware/Cyron.nix
+      (self.nixosModules.Cyron.nvidia or {})
     ] 
-    # Collects all system, desktop, and app modules automatically
     ++ (lib.collect builtins.isAttrs (self.nixosModules.system or {}))
     ++ (lib.collect builtins.isAttrs (self.nixosModules.apps or {}))
     ++ (lib.collect builtins.isAttrs (self.nixosModules.desktop or {}));
