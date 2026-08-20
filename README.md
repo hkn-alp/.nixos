@@ -18,7 +18,6 @@ Boot the target machine or VM using the official **NixOS Minimal ISO**.
 * **Wireless Connection (Wi-Fi):**
   Use the NetworkManager text UI to scan and connect:
   ```bash
-  sudo systemctl start NetworkManager
   nmtui
   ```
   *(Select **Activate a connection**, choose your SSID, and enter your password).*
@@ -42,6 +41,12 @@ Install the entire system referencing the remote flake directly:
 
 ```bash
 sudo nixos-install --flake "github:hkn-alp/.nixos#Cyron" --no-root-passwd
+```
+
+**Verify patitions:**
+To ensure Disko successfully formatted and mounted your drives, check the block device layout:
+```bash
+lsblk
 ```
 
 ---
@@ -130,6 +135,13 @@ Because NixOS flakes evaluate exactly what is in your Git repository, you cannot
      --mode disko \
      --flake .#NewHost
    ```
+
+**Verify patitions:**
+To ensure Disko successfully formatted and mounted your drives, check the block device layout:
+```bash
+lsblk
+```
+
 
 6. **Generate the Hardware Config:**
    Now that the drives are mounted, generate the hardware profile directly into your new hardware folder:
