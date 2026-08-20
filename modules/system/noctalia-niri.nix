@@ -1,27 +1,29 @@
 # modules/system/noctalia-niri.nix
-{ self, inputs, pkgs, lib, ... }: {
+{ self, inputs, ... }: {
   
   # === 1. THE SYSTEM DESKTOP MODULE ===
-  imports = [ 
-    inputs.noctalia.nixosModules.default 
-    inputs.noctalia-greeter.nixosModules.default
-  ];
-  
-  programs.noctalia = {
-    enable = true;
-    systemd.enable = true;
-    recommendedServices.enable = true;
-    package = self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia-niri;
-  };
-  
-  programs.noctalia-greeter = {
-    enable = true;
-    greeter-args = "session niri";
-  };
+  flake.nixosModules.desktop = { config, pkgs, lib, ... }: {
+    imports = [ 
+      inputs.noctalia.nixosModules.default 
+      inputs.noctalia-greeter.nixosModules.default
+    ];
+    
+    programs.noctalia = {
+      enable = true;
+      systemd.enable = true;
+      recommendedServices.enable = true;
+      package = self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia-niri;
+    };
+    
+    programs.noctalia-greeter = {
+      enable = true;
+      greeter-args = "session niri";
+    };
 
-  programs.niri = {
-    enable = true;
-    package = self.packages.${pkgs.stdenv.hostPlatform.system}.niri4noctalia;
+    programs.niri = {
+      enable = true;
+      package = self.packages.${pkgs.stdenv.hostPlatform.system}.niri4noctalia;
+    };
   };
 
   # === 2. THE WRAPPED PACKAGES ===
