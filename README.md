@@ -120,6 +120,7 @@ Because NixOS flakes evaluate exactly what is in your Git repository, you cannot
    * Because Nix flakes ignore untracked files, create an empty placeholder for your hardware config first, then stage it:
    ```bash
    touch hardware/NewHost.nix
+   echo "{ ... }: {}" > hardware/NewHost.nix
    git add hardware/NewHost.nix
 
 5. **Format & Mount (Disko):**
