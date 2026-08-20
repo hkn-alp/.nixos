@@ -1,5 +1,5 @@
 # modules/system/noctalia-niri.nix
-{ self, inputs, ... }: {
+{ self, inputs, pkgs, lib, ... }: {
   
   # === 1. THE SYSTEM DESKTOP MODULE ===
   imports = [ 
