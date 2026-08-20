@@ -61,7 +61,7 @@
           (sndio.overrideAttrs (old: {
             postFixup = (old.postFixup or "") + ''
               ln -s $out/lib/libsndio.so $out/lib/libsndio.so.6.1
-            ''
+            '';
           }))
         ];
       }).run;
