@@ -117,6 +117,10 @@ Because NixOS flakes evaluate exactly what is in your Git repository, you cannot
    * Edit `modules/hosts/NewHost/configuration.nix` and change `networking.hostName` to `NewHost`.
    * Edit `modules/hosts/NewHost/disko-config.nix` to ensure the `device = "/dev/..."` line matches the target drive of the new machine (e.g., `/dev/vda` for VMs).
    * Edit `flake.nix` to duplicate the `Cyron` configuration block and rename it for `NewHost`.
+   * Because Nix flakes ignore untracked files, create an empty placeholder for your hardware config first, then stage it:
+   ```bash
+   touch hardware/NewHost.nix
+   git add hardware/NewHost.nix
 
 5. **Format & Mount (Disko):**
    Run Disko using your *local* flake to partition the drive and mount it to `/mnt`:
