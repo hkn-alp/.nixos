@@ -103,7 +103,7 @@ Because NixOS flakes evaluate exactly what is in your Git repository, you cannot
 2. **Clone Locally:**
    Inside that shell, clone your repository:
    ```bash
-   git clone [https://github.com/hkn-alp/.nixos.git](https://github.com/hkn-alp/.nixos.git)
+   git clone https://github.com/hkn-alp/.nixos.git
    cd .nixos
    ```
 
