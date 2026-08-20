@@ -1,7 +1,7 @@
 # modules/hosts/Cyron/configuration.nix
 { self, inputs, lib, ... }: {
 
-  flake.nixosConfigurations.Cyron = inputs.nixpkgs.lib.nixosSystem {
+  flake.nixosConfigurations.VM = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = { inherit self inputs; };
     modules = [
@@ -24,7 +24,7 @@
     boot.loader.efi.canTouchEfiVariables = true;
     boot.kernelPackages = pkgs.linuxPackages.latest;
 
-    networking.hostName = "Cyron";
+    networking.hostName = "VM";
     time.timeZone = "Europe/Istanbul";
     i18n.defaultLocale = "en_US.UTF-8";
 
