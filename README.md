@@ -143,13 +143,29 @@ To ensure Disko successfully formatted and mounted your drives, check the block 
 lsblk
 ```
 
-
 6. **Generate the Hardware Config:**
    Now that the drives are mounted, generate the hardware profile directly into your new hardware folder:
    ```bash
    sudo nixos-generate-config --root /mnt --dir /tmp
    cp /tmp/hardware-configuration.nix hardware/NewHost.nix
    ```
+   
+   *Open the generated file in nano to remove conflicting mounts and encryption definitions:*
+   ```bash
+   nano hardware/NewHost.nix
+   ```
+   
+   *Delete these blocks if they appear*
+   ```nix
+   fileSystems."/" = { ... };
+   fileSystems."/boot" = { ... };
+   fileSystems."/nix" = { ... };
+   fileSystems."/home" = { ... };
+   swapDevices = [ ... ];
+   boot.initrd.luks.devices."cryptroot".device = ...;
+   ```
+   
+   *Save and exit nano*
 
 7. **Track Files in Git (Crucial):**
    Nix flakes completely ignore files that are not tracked by Git. Because you are still in your `nix-shell -p git` environment, you can stage the new hardware config:
@@ -189,14 +205,14 @@ Here is the template used for `supertuxkart` that you can copy and adapt for pro
 
 ```nix
 { ... }: {
-  flake.nixosModules.apps.media.blender = { pkgs, ... }: {
+  flake.modules.apps.games.supertuxkart = { pkgs, ... }: {
     environment.systemPackages = [
       (pkgs.symlinkJoin {
-        name = "blender-nvidia";
-        paths = [ pkgs.blender ];
+        name = "supertuxkart-nvidia";
+        paths = [ pkgs.supertuxkart ];
         buildInputs = [ pkgs.makeWrapper ];
         postBuild = ''
-          wrapProgram $out/bin/blender \
+          wrapProgram $out/bin/supertuxkart \
             --set __NV_PRIME_RENDER_OFFLOAD 1 \
             --set __VK_LAYER_NV_optimus NVIDIA_only \
             --set __GLX_VENDOR_LIBRARY_NAME nvidia

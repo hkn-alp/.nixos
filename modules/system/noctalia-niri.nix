@@ -30,7 +30,7 @@
   perSystem = { pkgs, lib, self', ... }: {
     packages.noctalia-niri = inputs.wrapper-modules.wrappers.noctalia-shell.wrap {
       inherit pkgs;
-      settings = (builtins.fromTOML (builtins.readFile ./noctalia-niri/noctalia-config.toml)).settings;
+      settings = (builtins.fromTOML (builtins.readFile ./noctalia-niri-config/noctalia-config.toml)).settings;
     };
 
     packages.niri4noctalia = inputs.wrapper-modules.wrappers.niri.wrap {
@@ -38,7 +38,7 @@
       settings = {
         xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite;
       };
-      extraConfig = builtins.readFile ./noctalia-niri/niri-config.kdl;
+      extraConfig = builtins.readFile ./noctalia-niri-config/niri-config.kdl;
     };
   };
 }
