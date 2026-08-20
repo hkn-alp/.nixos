@@ -54,8 +54,7 @@
             swap = {
               priority = 3;
               name = "swap";
-              start = "-8G";
-              end = "100%";
+              size = "100%";
               content = {
                 type = "swap";
                 discardPolicy = "both";
