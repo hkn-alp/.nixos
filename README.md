@@ -36,6 +36,7 @@ sudo nix --experimental-features "nix-command flakes" run github:nix-community/d
 
 **Verify partitions:**
 To ensure Disko successfully formatted and mounted your drives, check the block device layout:
+
 ```bash
 lsblk
 ```
@@ -137,11 +138,11 @@ Because NixOS flakes evaluate exactly what is in your Git repository, you cannot
      --flake .#NewHost
    ```
 
-**Verify partitions:**
-To ensure Disko successfully formatted and mounted your drives, check the block device layout:
-```bash
-lsblk
-```
+   **Verify partitions:**
+   To ensure Disko successfully formatted and mounted your drives, check the block device layout:
+   ```bash
+   lsblk
+   ```
 
 6. **Generate the Hardware Config:**
    Now that the drives are mounted, generate the hardware profile directly into your new hardware folder:
