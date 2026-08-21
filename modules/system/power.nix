@@ -1,11 +1,10 @@
 # modules/system/power.nix
 { self, inputs, ... }: {
-
-  flake.modules.system.power = { config, pkgs, ... }: {
-    
-    # === 1. POWER MANAGEMENT ===
-    services.upower.enable = true;
-    services.power-profiles-daemon.enable = true;
-  };
-
+  flake.modules.system.power = [
+    ({ config, pkgs, ... }: {
+      # === 1. POWER MANAGEMENT ===
+      services.upower.enable = true;
+      services.power-profiles-daemon.enable = true;
+    })
+  ];
 }
