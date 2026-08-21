@@ -18,6 +18,9 @@
     ] 
     ++ (lib.collect builtins.isFunction (self.modules.system or {}))
     ++ (lib.collect builtins.isFunction (self.modules.apps or {}));
+    
+    # Add this line to globally allow unfree packages and prevent option conflicts
+    nixpkgs.config.allowUnfree = true;
 
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;

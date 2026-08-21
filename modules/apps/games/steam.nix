@@ -1,13 +1,6 @@
 # modules/apps/games/steam.nix
 { ... }: {
-  flake.modules.apps.games.steam = { pkgs, lib, ... }: {
-    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-      "steam"
-      "steam-unwrapped"
-      "steam-original"
-    ];
-
-    programs.steam = {
+  flake.modules.apps.games.steam = { pkgs, lib, ... }: {programs.steam = {
       enable = true;
       remotePlay.openFirewall = true;
       dedicatedServer.openFirewall = true;

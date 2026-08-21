@@ -2,19 +2,14 @@
 { self, inputs, ... }: {
   
   flake.modules.system.gaming = { config, pkgs, lib, ... }: {
-    
-    # === 1. UNFREE PERMISSION FOR STEAM-RUN ===
-    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-      "steam-run"
-    ];
 
-    # === 2. GRAPHICS & 32-BIT SUPPORT ===
+    # === 1. GRAPHICS & 32-BIT SUPPORT ===
     hardware.graphics = {
       enable = true;
       enable32Bit = true;
     };
 
-    # === 3. GAMEMODE & PERFORMANCE ===
+    # === 2. GAMEMODE & PERFORMANCE ===
     programs.gamemode = {
       enable = true;
       settings = {
@@ -24,14 +19,14 @@
       };
     };
 
-    # === 4. GAMESCOPE COMPOSITOR ===
+    # === 3. GAMESCOPE COMPOSITOR ===
     programs.gamescope = {
       enable = true;
       capSysNice = true;
       enableWsi = true;
     };
 
-    # === 5. ESYNC & SYSTEMD FILE DESCRIPTOR LIMITS ===
+    # === 4. ESYNC & SYSTEMD FILE DESCRIPTOR LIMITS ===
     systemd.settings.Manager = {
       DefaultLimitNOFILE = "524288";
     };
@@ -44,7 +39,7 @@
       }
     ];
 
-    # === 6. CONTROLLER UDEV RULES ===
+    # === 5. CONTROLLER UDEV RULES ===
     services.udev.extraRules = ''
       # 8BitDo Ultimate Controller
       SUBSYSTEM=="input", ATTRS{idVendor}=="2dc8", ATTRS{idProduct}=="3106", MODE="0660", GROUP="input"
@@ -52,7 +47,7 @@
       KERNEL=="hidraw*", ATTRS{idVendor}=="2dc8", MODE="0660", GROUP="input"
     '';
 
-    # === 7. OVERLAYS & STEAM-RUN COMPATIBILITY ===
+    # === 6. OVERLAYS & STEAM-RUN COMPATIBILITY ===
     nixpkgs.overlays = [
       (final: prev: {
         steam-run = (prev.steam.override {
@@ -70,7 +65,7 @@
       })
     ];
 
-    # === 8. UTILITIES & EMULATORS ===
+    # === 7. UTILITIES & EMULATORS ===
     environment.systemPackages = with pkgs; [
       steam-run
       protonup-qt
