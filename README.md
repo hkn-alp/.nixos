@@ -1,225 +1,232 @@
-# .nixos (Host: Cyron)
+# .nixos
 
-Declarative NixOS configuration featuring Niri, Noctalia Shell, PRIME offload gaming, and Disko-managed LUKS + Btrfs.
+A declarative, role-based NixOS configuration featuring Niri, the Noctalia Shell, PRIME offload gaming, and Disko-managed LUKS + Btrfs.
 
----
-
-## 1. Installation from Live ISO (Existing Host)
-
-### Step 1: Boot & Connect to Network
-Boot the target machine or VM using the official **NixOS Minimal ISO**.
-
-* **Wired Connection (Ethernet):**
-  DHCP is active by default. Verify your connection with:
-  ```bash
-  ping -c 3 nixos.org
-  ```
-
-* **Wireless Connection (Wi-Fi):**
-  Use the NetworkManager text UI to scan and connect:
-  ```bash
-  nmtui
-  ```
-  *(Select **Activate a connection**, choose your SSID, and enter your password).*
+This repository utilizes a flattened module architecture, allowing you to instantly deploy highly specific "suites" (e.g., `development`, `games`, `office`) across physical desktops, laptops, and virtual machines.
 
 ---
 
-### Step 2: Disk Partitioning, Encryption & Formatting (Disko)
-Run Disko directly from GitHub to automatically configure the GPT partitions, LUKS container, Btrfs subvolumes, and swap space:
+## 🛠️ The GitOps Workflow (Local-First)
 
+This system is managed via custom bash commands embedded in `modules/core/bash.nix`. It enforces a strict "Local-First" rule: changes are built and applied locally, and *only* pushed to GitHub if the build succeeds.
+
+| Command | Action |
+| :--- | :--- |
+| `nix-test` | Builds the system locally. Changes revert on the next reboot. Perfect for testing breaking changes. |
+| `nix-deploy -m "msg"` | Builds the system locally. If successful, automatically commits and pushes the configuration to GitHub. |
+| `nix-upgrade -m "msg"` | Fetches the latest Nixpkgs, applies them locally, and pushes the new `flake.lock` to GitHub upon success. |
+| `nix-upgrade-inputs <input>` | Updates a specific flake input (e.g., `noctalia`), applies locally, and pushes the lockfile. |
+
+---
+
+## 🚀 Scenario A: Reinstalling an Existing Host
+*Use this method if the machine's profile (like Cyron or VM) and `hardware.nix` already exist in the GitHub repository.*
+
+### Step 1: Boot & Format (Disko)
+Boot the NixOS Minimal ISO and connect to the internet (use `nmtui` for Wi-Fi). Run Disko directly from GitHub to partition and mount the drives:
 ```bash
-sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- \
-  --mode disko \
-  --flake "github:hkn-alp/.nixos#Cyron"
+sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko --flake "github:hkn-alp/.nixos#Cyron"
 ```
+
 *(Enter your chosen LUKS encryption password when prompted).*
 
-**Verify partitions:**
-To ensure Disko successfully formatted and mounted your drives, check the block device layout:
+### Step 2: Install NixOS
+
+Since the hardware configuration is already on GitHub, install directly from the remote flake:
+
+```bash
+sudo nixos-install --flake "github:hkn-alp/.nixos#Cyron" --no-root-passwd
+sudo reboot
+```
+
+### Step 3: Post-Installation Setup
+
+Log in. Clone your repository locally so you can manage future updates via your GitOps workflow:
+
+```bash
+git clone https://github.com/hkn-alp/.nixos.git ~/.nixos
+cd ~/.nixos
+```
+
+---
+
+## 🚀 Scenario B: Bootstrapping a New Machine
+
+*Use this method if you are installing NixOS on a brand new computer that needs a new `hardware.nix` generated.*
+
+### Step 1: Prep the Live Environment & Clone
+
+Boot the NixOS Minimal ISO, connect to the internet, and spawn a temporary shell with Git:
+
+```bash
+nix-shell -p git
+git clone https://github.com/hkn-alp/.nixos.git
+cd .nixos
+
+```
+
+### Step 2: Create the Host Profile
+
+First, duplicate an existing host folder to act as your template:
+```bash
+cp -r hosts/Cyron hosts/NewHost
+```
+
+**1. Route the Flake (Critical)**
+Open `flake.nix` and add your `NewHost` to the `nixosConfigurations` block so the flake knows how to evaluate it. 
+
+You must define the correct CPU architecture for the new machine. If you are unsure, run `uname -m` in the terminal:
+* For standard Intel/AMD processors, use `"x86_64-linux"`.
+* For ARM processors (Raspberry Pi, ARM servers, Mac VMs), use `"aarch64-linux"`.
+
+```nix
+NewHost = nixpkgs.lib.nixosSystem {
+  system = "x86_64-linux"; # <-- Update this if using ARM!
+  specialArgs = { inherit inputs; };
+  modules = [
+    ./hosts/NewHost/default.nix
+  ];
+};
+```
+
+**2. Update the Hostname**
+Open `hosts/NewHost/default.nix` and ensure the hostname matches your new machine:
+
+```nix
+networking.hostName = "NewHost";
+```
+
+**3. Target the Correct Drive with Disko (Critical)**
+You must explicitly tell Disko which physical drive to partition. First, list your available block devices to find the correct identifier:
 
 ```bash
 lsblk
 ```
-*(You should see your main drive divided into ESP, a decrypted cryptroot LUKS container with your Btrfs subvolumes mounted under /mnt, and a swap partition).*
 
----
+Once you identify the target drive (e.g., `nvme0n1`, `sda`, or `vda`), open `hosts/NewHost/disko.nix` and update the device target:
 
-### Step 3: Install NixOS
-Install the entire system referencing the remote flake directly:
-
-```bash
-sudo nixos-install --flake "github:hkn-alp/.nixos#Cyron" --no-root-passwd
+```nix
+disko.devices.disk.main = {
+  device = "/dev/YOUR_TARGET_DRIVE"; # <-- Update this line
+  # ...
+};
 ```
 
----
+**4. Stage the Hardware Profile**
+Create an empty placeholder for your hardware configuration. Because Nix flakes completely ignore untracked files, you **must** stage this file in Git now, otherwise the installer will not be able to write to it in Step 4:
 
-### Step 4: Reboot
+```bash
+touch hosts/NewHost/hardware.nix
+git add .
+```
+
+### Step 3: Format the Disk (Disko)
+
+Run Disko using your *local* flake to format and mount the drives to `/mnt`:
+
+```bash
+sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko --flake .#NewHost
+```
+
+### Step 4: Generate Hardware Config
+
+Now that the drives are mounted, generate the hardware profile:
+
+```bash
+sudo nixos-generate-config --root /mnt --dir /tmp
+cp /tmp/hardware-configuration.nix hosts/NewHost/hardware.nix
+```
+
+*Crucial:* Open `hosts/NewHost/hardware.nix` and delete all `fileSystems`, `swapDevices`, and `boot.initrd.luks` blocks, as Disko handles these.
+
+### Step 5: Install & Persist
+
+Stage the newly generated hardware configuration in git. **Without this, the installer will ignore it!**
+
+```bash
+git add hosts/NewHost/hardware.nix
+```
+
+Install the system from the local flake:
+
+```bash
+sudo nixos-install --flake .#NewHost --no-root-passwd
+```
+
+**Do not reboot yet!** Copy the local repository directly into your new persistent home directory so it survives the reboot:
+
+```bash
+sudo cp -r ~/.nixos /mnt/home/hakanalp/
+sudo chown -R 1000:1000 /mnt/home/hakanalp/.nixos
+```
+
+### Step 6: Reboot & Push
+
 ```bash
 sudo reboot
 ```
 
----
+When the machine restarts, log in to your new permanent system.
 
-## 2. Post-Installation Setup
+Because we copied the repository to `/mnt` in the previous step, your `.nixos` folder is waiting for you exactly as you left it. However, you still need to permanently commit the hardware configuration and authenticate with GitHub to push it.
 
-Log in as `hakanalp` (default initial password: `1234`) and clone your repository locally to manage future builds. *(Note: Git is already installed here because it is in your core packages)*:
-
+1. Open a terminal and navigate to the repository:
 ```bash
-git clone [https://github.com/hkn-alp/.nixos.git](https://github.com/hkn-alp/.nixos.git) ~/.nixos
 cd ~/.nixos
 ```
 
-### Rebuilding the System (GitOps Workflow)
+2. Commit the new machine's configuration:
+```bash
+git commit -m "feat: bootstrap NewHost hardware configuration"
+```
 
-This configuration uses a GitOps workflow. Changes made locally must be tested, and then deployed to GitHub to become permanent. 
+3. Authenticate and push to your repository (you will need to generate a GitHub Personal Access Token or set up your SSH keys on this new machine first):
+```bash
+git push origin main
+```
 
-* **Test local changes safely:**
-  ```bash
-  nix-test
-  ```
-  *(Builds the system locally. If it crashes, changes disappear on reboot).*
-
-* **Deploy changes permanently:**
-  ```bash
-  nix-deploy -m "optional commit message here"
-  ```
-  *(Pushes your code to GitHub and deploys directly from the cloud).*
-
-* **Upgrade all packages (Nixpkgs, Disko, Noctalia):**
-  ```bash
-  nix-upgrade -m "optional commit message here"
-  ```
-
-* **Upgrade specific inputs:**
-  ```bash
-  nix-upgrade-inputs noctalia noctalia-greeter -m "optional commit message here"
-  ```
+Your new machine is now fully tracked in your GitOps workflow. Future updates can be handled entirely via your custom `nix-deploy` and `nix-upgrade` commands.
+```
 
 ---
 
-## 3. Porting to New Hardware
+## 🎮 Gaming & Dedicated GPUs (PRIME)
 
-Because NixOS flakes evaluate exactly what is in your Git repository, you cannot install from GitHub until your new hardware configuration is pushed there. You must perform the initial install from a local clone on the Live USB.
-
-1. **Boot, Connect, & Get Git:**
-   Boot the new machine with the Live ISO, connect to the internet, and spawn a temporary shell with Git installed:
-   ```bash
-   nix-shell -p git
-   ```
-
-2. **Clone Locally:**
-   Inside that shell, clone your repository:
-   ```bash
-   git clone https://github.com/hkn-alp/.nixos.git
-   cd .nixos
-   ```
-
-3. **Create the New Host Directory:**
-   Duplicate your existing host folder to create a template for the new one:
-   ```bash
-   cp -r modules/hosts/Cyron modules/hosts/NewHost
-   ```
-
-4. **Update Host-Specific Files:**
-   * Edit `modules/hosts/NewHost/configuration.nix` and change `networking.hostName` to `NewHost`.
-   * Edit `modules/hosts/NewHost/disko-config.nix` to ensure the `device = "/dev/..."` line matches the target drive of the new machine (e.g., `/dev/vda` for VMs).
-   * Edit `flake.nix` to duplicate the `Cyron` configuration block and rename it for `NewHost`.
-   * Because Nix flakes ignore untracked files, create an empty placeholder for your hardware config first, then stage it:
-   ```bash
-   touch hardware/NewHost.nix
-   echo "{ ... }: {}" > hardware/NewHost.nix
-   git add hardware/NewHost.nix
-
-5. **Format & Mount (Disko):**
-   Run Disko using your *local* flake to partition the drive and mount it to `/mnt`:
-   ```bash
-   sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- \
-     --mode disko \
-     --flake .#NewHost
-   ```
-
-   **Verify partitions:**
-   To ensure Disko successfully formatted and mounted your drives, check the block device layout:
-   ```bash
-   lsblk
-   ```
-
-6. **Generate the Hardware Config:**
-   Now that the drives are mounted, generate the hardware profile directly into your new hardware folder:
-   ```bash
-   sudo nixos-generate-config --root /mnt --dir /tmp
-   cp /tmp/hardware-configuration.nix hardware/NewHost.nix
-   ```
-   
-   *Open the generated file in nano to remove conflicting mounts and encryption definitions:*
-   ```bash
-   nano hardware/NewHost.nix
-   ```
-   
-   *Delete these blocks if they appear*
-   ```nix
-   fileSystems."/" = { ... };
-   fileSystems."/boot" = { ... };
-   fileSystems."/nix" = { ... };
-   fileSystems."/home" = { ... };
-   swapDevices = [ ... ];
-   boot.initrd.luks.devices."cryptroot".device = ...;
-   ```
-   
-   *Save and exit nano*
-
-7. **Track Files in Git (Crucial):**
-   Nix flakes completely ignore files that are not tracked by Git. Because you are still in your `nix-shell -p git` environment, you can stage the new hardware config:
-   ```bash
-   git add .
-   ```
-
-8. **Install from the Local Flake:**
-   Run the installer pointing to your local directory (`.`) instead of GitHub:
-   ```bash
-   sudo nixos-install --flake .#NewHost --no-root-passwd
-   sudo reboot
-   ```
-
-9. **Push to GitHub:**
-   Once you boot into your new system, open a terminal, commit your changes, and push them to GitHub. Future updates can now be run normally using the `nix-deploy` command.
-
----
-
-## 4. Gaming & Discrete GPU Guide
-
-PRIME offload and GameMode are configured system-wide.
+This configuration universally applies GameMode and specific input Udev rules (like 8BitDo support) via `modules/games/system-gaming.nix`.
 
 ### Game Launchers
+
 * **Steam Games**: Right-click the game in Steam -> **Properties...** -> **General** -> **Launch Options**:
-  ```bash
-  gamemoderun nvidia-offload %command%
-  ```
-  *(Or with MangoHud: `gamemoderun mangohud nvidia-offload %command%`)*
+```bash
+gamemoderun nvidia-offload %command%
+```
+
+*(Or with MangoHud: `gamemoderun mangohud nvidia-offload %command%`)*
+
 * **Heroic Games Launcher**: Go to **Settings** -> **Game Defaults** (or per-game settings) -> **Other** -> toggle **Use Dedicated Graphics Card (PRIME Offload)** and **Use GameMode** to ON.
+
 * **Lutris**: Go to **Preferences** -> **Global Options** -> toggle **Enable NVIDIA Prime Render Offload** and **Enable GameMode** to ON.
 
 ### Wrapping Standalone Apps (Blender, FreeCAD, SuperTuxKart)
+
 To force standalone applications to permanently use the discrete GPU, use `symlinkJoin` and `makeWrapper` in your `.nix` module. This injects the required environment variables directly into the application's executable.
 
-Here is the template used for `supertuxkart` that you can copy and adapt for productivity software like `blender` or `freecad`:
+Here is the module template used for `supertuxkart.nix` that you can adapt for other software:
 
 ```nix
-{ ... }: {
-  flake.modules.apps.games.supertuxkart = { pkgs, ... }: {
-    environment.systemPackages = [
-      (pkgs.symlinkJoin {
-        name = "supertuxkart-nvidia";
-        paths = [ pkgs.supertuxkart ];
-        buildInputs = [ pkgs.makeWrapper ];
-        postBuild = ''
-          wrapProgram $out/bin/supertuxkart \
-            --set __NV_PRIME_RENDER_OFFLOAD 1 \
-            --set __VK_LAYER_NV_optimus NVIDIA_only \
-            --set __GLX_VENDOR_LIBRARY_NAME nvidia
-        '';
-      })
-    ];
-  };
+{ pkgs, ... }: {
+  environment.systemPackages = [
+    (pkgs.symlinkJoin {
+      name = "supertuxkart-nvidia";
+      paths = [ pkgs.supertuxkart ];
+      buildInputs = [ pkgs.makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/supertuxkart \
+          --set __NV_PRIME_RENDER_OFFLOAD 1 \
+          --set __VK_LAYER_NV_optimus NVIDIA_only \
+          --set __GLX_VENDOR_LIBRARY_NAME nvidia
+      '';
+    })
+  ];
 }
 ```
