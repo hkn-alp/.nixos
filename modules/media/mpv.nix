@@ -1,3 +1,3 @@
 { pkgs, ... }: {
-  programs.mpv.enable = true;
+  environment.systemPackages = [ pkgs.mpv ];
 }
