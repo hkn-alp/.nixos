@@ -38,7 +38,7 @@
     # 2. The explicit options declaration
     options = {
       flake.modules = lib.mkOption {
-        type = lib.types.attrs;
+        type = lib.types.anything;
         default = {};
         description = "Custom heavily nested modules tree";
       };
