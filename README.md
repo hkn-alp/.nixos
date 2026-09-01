@@ -136,6 +136,7 @@ Create an empty placeholder for your hardware configuration. Because Nix flakes 
 
 ```bash
 touch hosts/NewHost/hardware.nix
+echo { ... }: {} > hosts/NewHost/hardware.nix 
 git add .
 
 ```
