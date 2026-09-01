@@ -5,10 +5,9 @@
     ./hardware.nix
     ./disko.nix
     ./nvidia.nix
-    ./modules.nix
+    ../../modules/profiles/workstation.nix
   ];
 
-  # Host-specific settings go directly here
   networking.hostName = "Cyron";
   time.timeZone = "Europe/Istanbul";
   i18n.defaultLocale = "en_US.UTF-8";

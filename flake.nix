@@ -1,17 +1,6 @@
 {
   description = "NixOS Configuration";
 
-  nixConfig = {
-    extra-substituters = [ 
-      "https://cache.nixos.org"
-      "https://noctalia.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
-    ];
-  };
-
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     
@@ -20,9 +9,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Tier 2: Declarative Flatpak Management
+    nix-flatpak.url = "github:gmodena/nix-flatpak";
+
     wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
-    noctalia.url = "github:noctalia-dev/noctalia/cachix";
-    noctalia-greeter.url = "github:noctalia-dev/noctalia-greeter";
   };
 
   outputs = { self, nixpkgs, ... }@inputs: {
