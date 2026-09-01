@@ -55,7 +55,7 @@ sudo reboot
 Log in. Clone your repository locally so you can manage future updates via your GitOps workflow:
 
 ```bash
-git clone [https://github.com/hkn-alp/.nixos.git](https://github.com/hkn-alp/.nixos.git) ~/.nixos
+git clone https://github.com/hkn-alp/.nixos.git ~/.nixos
 cd ~/.nixos
 
 ```
@@ -72,7 +72,7 @@ Boot the NixOS Minimal ISO, connect to the internet, and spawn a temporary shell
 
 ```bash
 nix-shell -p git
-git clone [https://github.com/hkn-alp/.nixos.git](https://github.com/hkn-alp/.nixos.git)
+git clone https://github.com/hkn-alp/.nixos.git
 cd .nixos
 
 ```
