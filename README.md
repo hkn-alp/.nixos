@@ -8,7 +8,7 @@ This repository utilizes a layered 3-tier architecture, allowing you to seamless
 
 ## 🏗️ The 3-Tier Architecture
 
-To maintain a clean and reproducible system, configuration is split into three distinct layers[cite: 3]:
+To maintain a clean and reproducible system, configuration is split into three distinct layers:
 
 * **Tier 1 (System Core):** Global, OS-level configurations including hardware drivers, bootloaders, core networking, system packages, desktop environments (Niri + Noctalia), and global gaming utilities.
 * **Tier 2 (Sandboxed Applications):** Containerized environments and GUI applications managed declaratively via Flatpak and Distrobox/Podman.
@@ -29,7 +29,7 @@ This system is managed via custom bash commands embedded in `modules/tier1/core/
 ---
 
 ## 🚀 Scenario A: Reinstalling an Existing Host
-*Use this method if the machine's profile (like Cyron or VM) and `hardware.nix` already exist in the GitHub repository[cite: 3].*
+*Use this method if the machine's profile (like Cyron or VM) and `hardware.nix` already exist in the GitHub repository.*
 
 ### Step 1: Boot & Format (Disko)
 Boot the NixOS Minimal ISO and connect to the internet (use `nmtui` for Wi-Fi). Run Disko directly from GitHub to partition and mount the drives:
