@@ -112,6 +112,9 @@ input {
 layout {
     // Set gaps around windows in logical pixels.
     gaps 4
+    
+    // Background color
+    background-color "#1e1e2e"
 
     // When to center a column when changing focus, options are:
     // - "never", default behavior, focusing an off-screen column will keep at the left
@@ -633,6 +636,33 @@ binds {
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.
     Mod+Shift+P { power-off-monitors; }
+    
+    // --- NOCTALIA CORE UI BINDS ---
+    Mod+Space hotkey-overlay-title="App Launcher" { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
+    Mod+S hotkey-overlay-title="Settings" { spawn "noctalia" "msg" "settings-toggle"; }
+    Mod+D hotkey-overlay-title="Control Center" { spawn "noctalia" "msg" "panel-toggle" "control-center"; }
+    Alt+Tab { spawn "noctalia" "msg" "window-switcher"; }
+
+    // --- MEDIA & BRIGHTNESS (Triggers Noctalia OSDs) ---
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-up"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-down"; }
+    XF86AudioMute        allow-when-locked=true { spawn "noctalia" "msg" "volume-mute"; }
+    XF86AudioMicMute     allow-when-locked=true { spawn "noctalia" "msg" "mic-mute"; }
+
+    XF86AudioPlay        allow-when-locked=true { spawn "noctalia" "msg" "media" "toggle"; }
+    XF86AudioPause       allow-when-locked=true { spawn "noctalia" "msg" "media" "toggle"; }
+    XF86AudioStop        allow-when-locked=true { spawn "noctalia" "msg" "media" "stop"; }
+    XF86AudioPrev        allow-when-locked=true { spawn "noctalia" "msg" "media" "previous"; }
+    XF86AudioNext        allow-when-locked=true { spawn "noctalia" "msg" "media" "next"; }
+    
+    XF86MonBrightnessUp   allow-when-locked=true { spawn "noctalia" "msg" "brightness-up"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "noctalia" "msg" "brightness-down"; }
+
+    // --- LOCK ---
+    Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "noctalia" "msg" "session" "lock"; }
+
+    // --- APP LAUNCHERS ---
+    Mod+T hotkey-overlay-title="Launch Terminal" { spawn "alacritty"; }
 }
 
 // ==========================================
@@ -640,10 +670,6 @@ binds {
 // ==========================================
 
 // --- Appearance Overrides ---
-layout {
-    background-color "transparent"
-}
-
 overview {
     workspace-shadow {
         off
@@ -685,37 +711,7 @@ layer-rule {
     }
 }
 
-// --- Noctalia Binds ---
 // Top-level block for hardware switches (like the laptop lid)
 switch-events {
     lid-close { spawn "noctalia" "msg" "session" "lock-and-suspend"; }
-}
-
-binds {
-    // --- NOCTALIA CORE UI ---
-    Mod+Space hotkey-overlay-title="App Launcher" { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
-    Mod+S hotkey-overlay-title="Settings" { spawn "noctalia" "msg" "settings-toggle"; }
-    Mod+D hotkey-overlay-title="Control Center" { spawn "noctalia" "msg" "panel-toggle" "control-center"; }
-    Alt+Tab { spawn "noctalia" "msg" "window-switcher"; }
-
-    // --- MEDIA & BRIGHTNESS (Triggers Noctalia OSDs) ---
-    XF86AudioRaiseVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-up"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-down"; }
-    XF86AudioMute        allow-when-locked=true { spawn "noctalia" "msg" "volume-mute"; }
-    XF86AudioMicMute     allow-when-locked=true { spawn "noctalia" "msg" "mic-mute"; }
-
-    XF86AudioPlay        allow-when-locked=true { spawn "noctalia" "msg" "media" "toggle"; }
-    XF86AudioPause       allow-when-locked=true { spawn "noctalia" "msg" "media" "toggle"; }
-    XF86AudioStop        allow-when-locked=true { spawn "noctalia" "msg" "media" "stop"; }
-    XF86AudioPrev        allow-when-locked=true { spawn "noctalia" "msg" "media" "previous"; }
-    XF86AudioNext        allow-when-locked=true { spawn "noctalia" "msg" "media" "next"; }
-    
-    XF86MonBrightnessUp   allow-when-locked=true { spawn "noctalia" "msg" "brightness-up"; }
-    XF86MonBrightnessDown allow-when-locked=true { spawn "noctalia" "msg" "brightness-down"; }
-
-    // --- LOCK ---
-    Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "noctalia" "msg" "session" "lock"; }
-
-    // --- APP LAUNCHERS ---
-    Mod+T hotkey-overlay-title="Launch Terminal" { spawn "alacritty"; }
 }

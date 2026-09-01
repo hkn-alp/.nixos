@@ -59,8 +59,5 @@
     steam-run
     protonup-qt
     mangohud
-    (retroarch.override {
-      cores = with libretro; [ puae scummvm dosbox ];
-    })
   ];
 }
