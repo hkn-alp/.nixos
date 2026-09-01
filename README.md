@@ -55,7 +55,7 @@ sudo reboot
 Log in. Clone your repository locally so you can manage future updates via your GitOps workflow:
 
 ```bash
-git clone https://github.com/hkn-alp/.nixos.git ~/.nixos
+git clone https://github.com/hkn-alp/.nixos.git
 cd ~/.nixos
 
 ```
@@ -149,6 +149,8 @@ sudo nix --experimental-features "nix-command flakes" run github:nix-community/d
 
 ```
 
+*Recommended:* Run `lsblk` to confirm your partitions and LUKS volumes are mounted properly before proceeding.
+
 ### Step 4: Generate Hardware Config
 
 Now that the drives are mounted, generate the hardware profile:
@@ -166,7 +168,7 @@ cp /tmp/hardware-configuration.nix hosts/NewHost/hardware.nix
 Stage the newly generated hardware configuration in git. **Without this, the installer will ignore it!**
 
 ```bash
-git add hosts/NewHost/hardware.nix
+git add .
 
 ```
 

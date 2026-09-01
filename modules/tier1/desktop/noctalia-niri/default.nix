@@ -29,7 +29,7 @@
       settings = {
         xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite;
       };
-      extraConfig = builtins.readFile ./niri-config.kdl;
+      extraSettings = builtins.readFile ./niri-config.kdl;
     };
   };
 }
