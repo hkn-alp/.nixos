@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }: 
+{ pkgs, lib, inputs, ... }: 
 {
   # --- Noctalia Shell ---
   programs.noctalia = {
@@ -7,7 +7,12 @@
     recommendedServices.enable = true;
     package = inputs.wrapper-modules.wrappers.noctalia-shell.wrap {
       inherit pkgs;
-      settings = builtins.fromTOML (builtins.readFile ./noctalia-config.toml);
+      
+      settings = lib.recursiveUpdate 
+        (builtins.fromTOML (builtins.readFile ./noctalia-config.toml)) 
+        {
+          wallpaper.default.path = "${../../../../assets/wallpapers/Mostar.jpg}";
+        };
     };
   };
 

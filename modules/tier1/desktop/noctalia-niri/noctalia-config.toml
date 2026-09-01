@@ -81,9 +81,6 @@ source = "wallpaper"
         "steam"
     ]
 
-[wallpaper.default]
-path = "~/.nixos/assets/wallpapers/Mostar.jpg"
-
 [widget.clock]
 format = "{:%Y-%m-%d, %H:%M:%S}"
 scale = 0.9
