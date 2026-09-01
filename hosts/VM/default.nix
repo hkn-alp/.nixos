@@ -4,7 +4,7 @@
     inputs.disko.nixosModules.disko
     ./hardware.nix
     ./disko.nix
-    ../../modules/profiles/workstation.nix
+    ../../modules/profiles/vm.nix
   ];
 
   networking.hostName = "VM";
