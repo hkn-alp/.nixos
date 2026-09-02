@@ -1,5 +1,5 @@
 { ... }: {
   imports = [
-    ./umbriel-noctalia
+    ./umbriel-noctalia.nix
   ];
 }
