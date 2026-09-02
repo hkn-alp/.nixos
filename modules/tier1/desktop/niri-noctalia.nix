@@ -17,7 +17,7 @@
   programs.niri.enable = true;
 
   # Route your raw KDL file into the system configuration directory
-  environment.etc."niri/config.kdl".source = ./niri-config.kdl;
+  environment.etc."niri/config.kdl".source = ./niri-noctalia-config/niri-config.kdl;
   
   # Tell Niri exactly where to find it
   environment.variables.NIRI_CONFIG = "/etc/niri/config.kdl";
