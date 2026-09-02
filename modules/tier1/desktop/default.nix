@@ -1,5 +1,5 @@
 { ... }: {
   imports = [
-    ./noctalia-niri
+    ./umbriel-noctalia
   ];
 }
