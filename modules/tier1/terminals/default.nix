@@ -1,5 +1,5 @@
 { ... }: {
   imports = [
-    ./alacritty
+    ./alacritty.nix
   ];
 }
