@@ -1,5 +1,12 @@
-{ pkgs, inputs, ... }: 
+{ pkgs, inputs, ... }:
 {
+  # Flake Inputs
+  imports = [
+    inputs.noctalia.nixosModules.default
+    inputs.noctalia-greeter.nixosModules.default
+    inputs.umbriel.nixosModules.default
+  ];
+
   # --- Noctalia Shell ---
   programs.noctalia = {
     enable = true;
@@ -40,21 +47,21 @@
   };
 
   # Combined System Packages
-  environment.systemPackages = with pkgs; [ 
+  environment.systemPackages = with pkgs; [
     # Core & Shell
     xwayland-satellite
-    
+
     # GTK Theme Engines, Icons & Tools
     adw-gtk3
     papirus-icon-theme
     papirus-folders
-    
+
     # Qt Theme Engines & Configuration Tools
     libsForQt5.qt5ct
     kdePackages.qt6ct
     kdePackages.qtstyleplugin-kvantum
   ];
-  
+
   programs.dconf.profiles.user.databases = [
     {
       settings = {

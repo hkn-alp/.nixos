@@ -1,6 +1,6 @@
 # .nixos
 
-A declarative, 3-tier role-based NixOS configuration featuring Niri, the Noctalia Shell, PRIME offload gaming, and Disko-managed LUKS + Btrfs.
+A declarative, 3-tier role-based NixOS configuration featuring Umbriel, the Noctalia Shell, PRIME offload gaming, and Disko-managed LUKS + Btrfs.
 
 This repository utilizes a layered 3-tier architecture, allowing you to seamlessly deploy highly specific "suites" (e.g., `workstation`, `server`) across physical desktops, laptops, and virtual machines.
 
@@ -10,7 +10,7 @@ This repository utilizes a layered 3-tier architecture, allowing you to seamless
 
 To maintain a clean and reproducible system, configuration is split into three distinct layers:
 
-* **Tier 1 (System Core):** Global, OS-level configurations including hardware drivers, bootloaders, core networking, system packages, desktop environments (Niri + Noctalia), and global gaming utilities.
+* **Tier 1 (System Core):** Global, OS-level configurations including hardware drivers, bootloaders, core networking, system packages, desktop environments (Umbriel + Noctalia), and global gaming utilities.
 * **Tier 2 (Sandboxed Applications):** Containerized environments and GUI applications managed declaratively via Flatpak and Distrobox/Podman.
 * **Tier 3 (Development Environments):** Project-specific, isolated toolchains (Python, Julia, Rust, LaTeX, C/C++) deployed dynamically on a per-folder basis using `direnv` and a global dev-shell flake.
 
