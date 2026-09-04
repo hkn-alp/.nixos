@@ -14,7 +14,7 @@
   services.tumbler.enable = true;
 
   # Optional: Recommended plugins for archives and volume management
-  programs.thunar.plugins = with pkgs.xfce; [
+  programs.thunar.plugins = with pkgs; [
     thunar-archive-plugin
     thunar-volman
   ];
