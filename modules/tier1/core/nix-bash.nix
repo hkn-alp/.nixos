@@ -8,6 +8,18 @@
       popd > /dev/null
     }
 
+    nix-test-back() {
+      local host=$(hostname)
+      pushd ~/.nixos > /dev/null
+      echo "Scrapping uncommitted changes..."
+      git reset --hard HEAD
+      git clean -fd
+
+      echo "Reverting live system to the last commit..."
+      sudo nixos-rebuild switch --flake ".#$host"
+      popd > /dev/null
+    }
+
     nix-deploy() {
       local msg="chore: update system configuration"
       local host=$(hostname)
@@ -15,9 +27,9 @@
         msg="$2"
       fi
       pushd ~/.nixos > /dev/null
-      
+
       git add -A
-      
+
       # 1. Build and apply LOCALLY first
       echo "Building and applying local configuration..."
       if sudo nixos-rebuild switch --flake ".#$host"; then
@@ -36,6 +48,22 @@
       popd > /dev/null
     }
 
+    nix-deploy-back() {
+      local host=$(hostname)
+      pushd ~/.nixos > /dev/null
+      echo "Reverting the last commit..."
+      git revert --no-edit HEAD
+
+      echo "Applying reverted configuration..."
+      if sudo nixos-rebuild switch --flake ".#$host"; then
+        git push origin main
+        echo "Rollback successful and pushed to GitHub."
+      else
+        echo "Rollback failed. You may need to fix conflicts manually."
+      fi
+      popd > /dev/null
+    }
+
     nix-upgrade() {
       local msg="chore: upgrade all packages (bump flake.lock)"
       local host=$(hostname)
@@ -45,7 +73,7 @@
       pushd ~/.nixos > /dev/null
       echo "Fetching newest packages from Nixpkgs..."
       nix flake update
-      
+
       # Build and apply LOCALLY first
       if sudo nixos-rebuild switch --flake ".#$host"; then
         git add flake.lock
