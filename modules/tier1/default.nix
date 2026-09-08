@@ -4,7 +4,6 @@
     ./desktop
     ./gaming
     ./hardware
-    ./terminals
     ./tools
   ];
 }

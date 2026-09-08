@@ -3,6 +3,7 @@
     nix-test() {
       local host=$(hostname)
       pushd ~/.nixos > /dev/null
+      git add -A
       echo "Testing local configuration for $host..."
       sudo nixos-rebuild test --flake ".#$host"
       popd > /dev/null

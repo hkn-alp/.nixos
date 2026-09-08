@@ -1,13 +1,16 @@
 { inputs, ... }: {
-  
+
   imports = [ inputs.nix-flatpak.nixosModules.nix-flatpak ];
 
   services.flatpak = {
     enable = true;
 
-    update.auto = {
-      enable = true;
-      onCalendar = "daily";
+    update = {
+      onActivation = true;
+      auto = {
+        enable = true;
+        onCalendar = "daily";
+      };
     };
 
     remotes = [{
@@ -17,9 +20,6 @@
 
     packages = [
       # --- GNOME Core & Utilities ---
-      "org.gnome.Boxes"
-      "org.gnome.Firmware"
-      "org.gnome.Logs"
       "org.gnome.Loupe"
       "org.gnome.NetworkDisplays" # Miracast App
       "org.gnome.Papers"
@@ -28,14 +28,13 @@
       "org.gnome.Snapshot"
       "org.gnome.SoundRecorder"
       "org.gnome.baobab"
-      "org.gnome.font-viewer"
-      
+
       # --- System Tools & Customization ---
       "com.github.tchx84.Flatseal"
       "com.ranfdev.DistroShelf"
       "io.github.flattool.Warehouse"
-      "io.missioncenter.MissionCenter"
       "io.gitlab.adhami3310.Impression"
+      "io.github.kolunmi.Bazaar"
 
       # --- Office & Productivity ---
       "org.onlyoffice.desktopeditors"
@@ -55,18 +54,12 @@
 
       # --- Gaming ---
       "net.supertuxkart.SuperTuxKart"
-      "com.vysp3r.ProtonPlus"
-      "com.github.Matoking.protontricks"
 
       # --- Browsers ---
-      "io.gitlab.librewolf-community"
-      
+      # "io.gitlab.librewolf-community"
+
       # --- Communictaion ---
       "org.signal.Signal"
-
-      # --- Miscellaneous ---
-      "io.github.flattool.Ignition"
-      "io.github.kolunmi.Bazaar"
     ];
   };
 }

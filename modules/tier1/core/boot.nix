@@ -3,6 +3,7 @@
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
     kernelPackages = pkgs.linuxPackages_latest;
+    kernelModules = [ "coretemp" "k10temp" ];
 
     # Graphical Boot & LUKS Prompt
     plymouth.enable = true;
