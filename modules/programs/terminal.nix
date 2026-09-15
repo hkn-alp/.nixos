@@ -12,7 +12,8 @@
   environment.systemPackages = with pkgs; [
     kitty
     direnv
-    yazi    # Blistering fast terminal file manager
-    helix   # Post-modern modal terminal editor
+    yazi
+    helix
+    rclone
   ];
 }
