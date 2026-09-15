@@ -1,7 +1,9 @@
 { ... }: {
   imports = [
-    ../tier1
-    ../tier2
-    ../tier3
+    ../core
+    ../hardware
+    ../desktop
+    ../programs
+    ../fallbacks
   ];
 }

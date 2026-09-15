@@ -49,6 +49,7 @@
   # Combined System Packages
   environment.systemPackages = with pkgs; [
     # Core & Shell
+    wl-clipboard
     xwayland-satellite
 
     # GTK Theme Engines, Icons & Tools

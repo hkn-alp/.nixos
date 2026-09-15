@@ -7,13 +7,8 @@
     git
     unzip
     ripgrep
-    jq
     btop
     pciutils
     usbutils
-    wl-clipboard
-    gnome-disk-utility
-    micro-full
-    yazi
   ];
 }

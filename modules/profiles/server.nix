@@ -1,6 +1,6 @@
 { ... }: {
   imports = [
-    ../tier1/core
+    ../core
     ../services
   ];
 }
