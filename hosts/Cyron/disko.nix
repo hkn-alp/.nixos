@@ -34,11 +34,6 @@
                   "/root" = { mountpoint = "/"; mountOptions = [ "compress=zstd" "noatime" "discard=async" ]; };
                   "/nix"  = { mountpoint = "/nix"; mountOptions = [ "compress=zstd" "noatime" "discard=async" ]; };
                   "/home" = { mountpoint = "/home"; mountOptions = [ "compress=zstd" "noatime" "discard=async" ]; };
-
-                  "/home/hakanalp/.cache" = { mountpoint = "/home/hakanalp/.cache"; mountOptions = [ "compress=zstd" "noatime" "discard=async" ]; };
-                  "/home/hakanalp/.config" = { mountpoint = "/home/hakanalp/.config"; mountOptions = [ "compress=zstd" "noatime" "discard=async" ]; };
-                  "/home/hakanalp/.local/share" = { mountpoint = "/home/hakanalp/.local/share"; mountOptions = [ "compress=zstd" "noatime" "discard=async" ]; };
-                  "/home/hakanalp/.var" = { mountpoint = "/home/hakanalp/.var"; mountOptions = [ "compress=zstd" "noatime" "discard=async" ]; };
                 };
               };
             };
