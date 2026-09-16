@@ -35,8 +35,15 @@
       # Ensure the local gdrive-main directory exists before attempting to sync
       ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p %h/gdrive-main";
 
-      # The main sync command (purposely omitting --resync for normal day-to-day use)
-      ExecStart = "${pkgs.rclone}/bin/rclone bisync 'gdrive:/Main' %h/gdrive-main --drive-skip-gdocs --drive-skip-shortcuts --verbose";
+      # The main sync command with auto-recovery and conflict resolution flags added
+      ExecStart = "${pkgs.rclone}/bin/rclone bisync 'gdrive:/Main' %h/gdrive-main " +
+                  "--resilient " +
+                  "--recover " +
+                  "--max-lock 2m " +
+                  "--conflict-resolve newer " +
+                  "--drive-skip-gdocs " +
+                  "--drive-skip-shortcuts " +
+                  "--verbose";
 
       StandardOutput = "journal";
       StandardError = "journal";
