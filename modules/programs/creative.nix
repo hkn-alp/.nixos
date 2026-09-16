@@ -1,12 +1,12 @@
 { pkgs, ... }: {
   environment.systemPackages = with pkgs; [
-    (pkgs.gpuWrap blender)
-    # (pkgs.gpuWrap davinci-resolve)
-    lorien
-    pinta
-    gimp
-    inkscape
-    audacity
-    obs-studio
+    (pkgs.gpuWrap blender) # Blender with GPU wrapper
+    # (pkgs.gpuWrap davinci-resolve) # DaVinci Resolve with GPU wrapper
+    lorien # Infinite Canvas Note Taking App
+    pinta # Painting Made Simple
+    gimp # GNU Image Manipulation Program
+    inkscape # Vector Image
+    audacity # Audio Editor
+    obs-studio # Screencasting & Live Streaming Software
   ];
 }

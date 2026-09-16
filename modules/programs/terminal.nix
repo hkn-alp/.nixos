@@ -10,10 +10,9 @@
 
   # --- Terminal Environment ---
   environment.systemPackages = with pkgs; [
-    kitty
-    direnv
-    yazi
-    helix
-    rclone
+    kitty # Terminal Emulator
+    yazi # TUI File Manager
+    helix # TUI Text Editor
+    gdu # TUI Disk Usage Analyzer
   ];
 }

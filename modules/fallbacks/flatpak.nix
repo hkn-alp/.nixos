@@ -24,6 +24,7 @@
       # Add Flatpaks here. Anything not in this list gets deleted.
       "com.github.tchx84.Flatseal"
       "io.github.flattool.Warehouse"
+      "org.onlyoffice.desktopeditors"
       # "com.ranfdev.DistroShelf"
     ];
   };

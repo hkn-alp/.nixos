@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   environment.systemPackages = with pkgs; [
-    onlyoffice-desktopeditors
+    # onlyoffice-desktopeditors # It is behind
     joplin-desktop
     texstudio
     papers

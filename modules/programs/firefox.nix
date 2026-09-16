@@ -35,7 +35,6 @@
     };
 
     # 2. System-Wide Preferences (about:config overrides)
-    # Translated from Home Manager 'profiles.default.settings' to NixOS 'preferences'
     preferences = {
       # --- FINGERPRINTING PROTECTION ---
       "privacy.resistFingerprinting" = true;

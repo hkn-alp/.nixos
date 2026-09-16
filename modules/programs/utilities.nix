@@ -9,15 +9,9 @@
   services.tumbler.enable = true;
 
   environment.systemPackages = with pkgs; [
-    # Hardware & Disk Utilities
     gnome-disk-utility
     resources
     lm_sensors
-    gdu
     baobab
-
-    # Networking & Transfer
-    system-config-printer
-    gnome-network-displays
   ];
 }

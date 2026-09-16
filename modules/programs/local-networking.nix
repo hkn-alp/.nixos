@@ -1,6 +1,6 @@
 { pkgs, ... }: {
 
-  # --- Local File Transfer ---
+  # --- Local File Transfer (LocalSend) ---
   programs.localsend = {
     enable = true;
     openFirewall = true; # Automatically handles TCP/UDP 53317
