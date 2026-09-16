@@ -79,8 +79,8 @@
 
   environment.systemPackages = with pkgs; [
     steam-run
-    protonup-qt
     mangohud
+    # Games
     (pkgs.gpuWrap supertuxkart)
   ];
 }
