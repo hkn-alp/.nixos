@@ -7,4 +7,10 @@
     dates = "weekly";
     options = "--delete-older-than 14d";
   };
+
+  # === 2. NVMe WEAR REDUCTION (RAM-BASED /tmp) ===
+  boot.tmp = {
+    useTmpfs = true;
+    tmpfsSize = "50%";
+  };
 }
