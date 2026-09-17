@@ -34,21 +34,11 @@ System states are managed via custom bash commands embedded in `modules/core/nix
 
 | Command | Action |
 | --- | --- |
-| `nix-test` | Builds the system locally. Changes revert on the next reboot. Perfect for testing breaking changes.
-
- |
-| `nix-test-back` | Scraps uncommitted changes and reverts the live system to the last commit.
-
- |
-| `nix-deploy -m "msg"` | Builds the system locally. If successful, automatically commits and pushes the configuration.
-
- |
-| `nix-deploy-back` | Reverts the last commit, applies the configuration, and pushes the rollback.
-
- |
-| `nix-upgrade -m "msg"` | Fetches the latest Nixpkgs, applies them locally, and pushes the new `flake.lock` upon success.
-
- |
+| `nix-test` | Builds the system locally. Changes revert on the next reboot. Perfect for testing breaking changes. |
+| `nix-test-back` | Scraps uncommitted changes and reverts the live system to the last commit. |
+| `nix-deploy -m "msg"` | Builds the system locally. If successful, automatically commits and pushes the configuration. |
+| `nix-deploy-back` | Reverts the last commit, applies the configuration, and pushes the rollback. |
+| `nix-upgrade -m "msg"` | Fetches the latest Nixpkgs, applies them locally, and pushes the new `flake.lock` upon success. |
 
 ---
 
