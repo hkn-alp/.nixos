@@ -1,15 +1,4 @@
 # rclone.nix
-#
-# =====================================================================
-# DEPLOYMENT DISCLAIMER FOR NEW MACHINES
-# =====================================================================
-# This automated mount will silently skip itself on a new machine
-# until you complete the following manual step:
-#
-# Authenticate Rclone:
-#   Run `rclone config` to set up the 'gdrive' remote (or securely
-#   copy your existing ~/.config/rclone/rclone.conf).
-# =====================================================================
 
 { pkgs, ... }: {
   environment.systemPackages = with pkgs; [
@@ -34,14 +23,11 @@
       # Ensure the mount point exists
       ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p %h/gdrive-main";
 
-      # The mount command with VFS caching enabled.
-      ExecStart = "${pkgs.rclone}/bin/rclone mount 'gdrive:/Main' %h/gdrive-main " +
-                  "--vfs-cache-mode full " +
-                  "--vfs-cache-max-age 24h " +
-                  "--vfs-cache-max-size 20G";
+      # THE FIX: Force rclone to use the secure NixOS fusermount3 wrapper via bash
+      ExecStart = "${pkgs.bash}/bin/bash -c 'PATH=/run/wrappers/bin:$PATH exec ${pkgs.rclone}/bin/rclone mount gdrive:/Main %h/gdrive-main --vfs-cache-mode full --vfs-cache-max-age 24h --vfs-cache-max-size 20G'";
 
       # Cleanly unmount when the service stops or restarts
-      ExecStop = "/run/wrappers/bin/fusermount -u %h/gdrive-main";
+      ExecStop = "/run/wrappers/bin/fusermount3 -u %h/gdrive-main";
 
       # Automatically restart if the network drops or it crashes
       Restart = "always";
