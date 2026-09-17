@@ -5,6 +5,7 @@
     ./hardware.nix
     ./disko.nix
     ./nvidia.nix
+    ./keyboard.nix
     ../../modules/profiles/workstation.nix
   ];
 
