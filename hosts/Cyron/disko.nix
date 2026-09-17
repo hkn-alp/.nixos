@@ -34,6 +34,9 @@
                   "/root" = { mountpoint = "/"; mountOptions = [ "compress=zstd" "noatime" "discard=async" ]; };
                   "/nix"  = { mountpoint = "/nix"; mountOptions = [ "compress=zstd" "noatime" "discard=async" ]; };
                   "/home" = { mountpoint = "/home"; mountOptions = [ "compress=zstd" "noatime" "discard=async" ]; };
+                  "/cache" = { mountpoint = "/home/hakanalp/.cache"; mountOptions = [ "compress=zstd" "noatime" "discard=async" ]; };
+                  "/steam" = { mountpoint = "/home/hakanalp/.local/share/Steam"; mountOptions = [ "compress=zstd" "noatime" "discard=async" ]; };
+                  "/containers" = { mountpoint = "/home/hakanalp/.local/share/containers"; mountOptions = [ "compress=zstd" "noatime" "discard=async" ]; };
                 };
               };
             };
@@ -52,4 +55,10 @@
       };
     };
   };
+
+  systemd.tmpfiles.rules = [
+    "d /home/hakanalp/.cache 0700 hakanalp users - -"
+    "d /home/hakanalp/.local/share/Steam 0700 hakanalp users - -"
+    "d /home/hakanalp/.local/share/containers 0700 hakanalp users - -"
+  ];
 }

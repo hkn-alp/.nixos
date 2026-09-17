@@ -22,8 +22,4 @@
       nvidiaBusId = "PCI:1:0:0";
     };
   };
-
-  environment.sessionVariables = {
-    __GL_SHADER_DISK_CACHE_PATH = "$HOME/.cache/nv";
-  };
 }
