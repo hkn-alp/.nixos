@@ -1,7 +1,11 @@
 { config, pkgs, ... }: {
   # === 1. DRIVE MEMORY SAVER (GARBAGE COLLECTION) ===
-  nix.settings.auto-optimise-store = true;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings = {
+      auto-optimise-store = true;
+      experimental-features = [ "nix-command" "flakes" ];
+      trusted-users = [ "root" "@wheel" ];
+    };
+
   nix.gc = {
     automatic = true;
     dates = "weekly";
