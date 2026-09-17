@@ -12,7 +12,7 @@
   environment.systemPackages = with pkgs; [
     kitty # Terminal Emulator
     yazi # TUI File Manager
-    helix # TUI Text Editor
+    micro # TUI Text Editor
     gdu # TUI Disk Usage Analyzer
   ];
 }
