@@ -54,11 +54,21 @@
     # GTK Theme Engines
     adw-gtk3
 
-    # Catpuccin Papirus Icons
-    # https://catppuccin.com/palette/
-    (catppuccin-papirus-folders.override {
-      flavor = "mocha";
-      accent = "flamingo";
+    # Papirus Icon Theme
+    # https://github.com/PapirusDevelopmentTeam/papirus-folders
+    # (papirus-icon-theme.override {
+    #   color = "yaru";
+    # })
+
+    # https://github.com/catppuccin/papirus-folders
+    # (catppuccin-papirus-folders.override {
+    #   flavor = "frappe";
+    #   accent = "maroon";
+    # })
+
+    # https://github.com/Adapta-Projects/Papirus-Nord
+    (papirus-nord.override {
+      accent = "polarnight3";
     })
 
     # Qt Theme Engines
