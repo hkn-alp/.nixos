@@ -34,7 +34,8 @@
   # --- Qt Theming ---
   qt = {
     enable = true;
-    platformTheme = "qt5ct";
+    platformTheme = "gnome";
+    style = "adwaita-dark";
   };
 
   # --- XDG Desktop Portal (Flatpak Integration) ---
@@ -50,20 +51,27 @@
     wl-clipboard
     xwayland-satellite
 
-    # GTK Theme Engines, Icons & Tools
+    # GTK Theme Engines
     adw-gtk3
-    papirus-icon-theme
-    papirus-folders
+
+    # Catpuccin Papirus Icons
+    # https://catppuccin.com/palette/
+    (catppuccin-papirus-folders.override {
+      flavor = "mocha";
+      accent = "flamingo";
+    })
 
     # Qt Theme Engines
-    libsForQt5.qt5ct
-    kdePackages.qt6ct
+    adwaita-qt
+    adwaita-qt6
   ];
 
   programs.dconf.profiles.user.databases = [
     {
       settings = {
         "org/gnome/desktop/interface" = {
+          color-scheme = "prefer-dark";
+          gtk-theme = "adw-gtk3-dark";
           icon-theme = "Papirus-Dark";
         };
       };
