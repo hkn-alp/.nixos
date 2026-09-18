@@ -26,17 +26,15 @@
   # Force Software Rendering and Qt Theme Engine Runtime Variables
   environment.variables = {
     WLR_RENDERER_ALLOW_SOFTWARE = "1";
-    QT_QPA_PLATFORMTHEME = "qt5ct";
   };
 
   # --- GTK Theming ---
   programs.dconf.enable = true;
 
-  # --- Qt & Kvantum Theming ---
+  # --- Qt Theming ---
   qt = {
     enable = true;
     platformTheme = "qt5ct";
-    style = "kvantum";
   };
 
   # --- XDG Desktop Portal (Flatpak Integration) ---
@@ -57,10 +55,9 @@
     papirus-icon-theme
     papirus-folders
 
-    # Qt Theme Engines & Configuration Tools
+    # Qt Theme Engines
     libsForQt5.qt5ct
     kdePackages.qt6ct
-    kdePackages.qtstyleplugin-kvantum
   ];
 
   programs.dconf.profiles.user.databases = [
