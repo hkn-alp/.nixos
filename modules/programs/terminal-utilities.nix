@@ -13,5 +13,6 @@
     yazi # TUI File Manager
     micro # TUI Text Editor
     gdu # TUI Disk Usage Analyzer
+    fastfetch # System Information Tool
   ];
 }
