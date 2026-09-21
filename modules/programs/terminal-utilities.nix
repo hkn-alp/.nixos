@@ -10,7 +10,6 @@
 
   # --- Terminal Environment ---
   environment.systemPackages = with pkgs; [
-    kitty # Terminal Emulator
     yazi # TUI File Manager
     micro # TUI Text Editor
     gdu # TUI Disk Usage Analyzer
