@@ -13,6 +13,5 @@
     resources
     lm_sensors
     baobab
-    file-roller
   ];
 }
