@@ -1,5 +1,3 @@
-# rclone.nix
-
 { pkgs, ... }: {
   environment.systemPackages = with pkgs; [
     rclone # TUI File & Cloud Sync Program
@@ -24,7 +22,7 @@
       ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p %h/gdrive-main";
 
       # THE FIX: Force rclone to use the secure NixOS fusermount3 wrapper via bash
-      ExecStart = "${pkgs.bash}/bin/bash -c 'PATH=/run/wrappers/bin:$PATH exec ${pkgs.rclone}/bin/rclone mount gdrive:/Main %h/gdrive-main --vfs-cache-mode full --vfs-cache-max-age 24h --vfs-cache-max-size 20G'";
+      ExecStart = "${pkgs.bash}/bin/bash -c 'PATH=/run/wrappers/bin:$PATH exec ${pkgs.rclone}/bin/rclone mount gdrive:/Main %h/gdrive-main --vfs-cache-mode full --vfs-cache-max-age 72h --vfs-cache-max-size 20G'";
 
       # Cleanly unmount when the service stops or restarts
       ExecStop = "/run/wrappers/bin/fusermount3 -u %h/gdrive-main";
