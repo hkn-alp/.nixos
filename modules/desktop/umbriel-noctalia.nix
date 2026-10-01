@@ -21,9 +21,13 @@
     WLR_RENDERER_ALLOW_SOFTWARE = "1";
   };
 
+  # Keyring
+  services.gnome.gnome-keyring.enable = true;
+
   # System Packages
   environment.systemPackages = with pkgs; [
     wl-clipboard
     xwayland-satellite
+    seahorse
   ];
 }
