@@ -1,11 +1,5 @@
 { pkgs, inputs, ... }:
 {
-  # Flake Inputs
-  imports = [
-    inputs.noctalia.nixosModules.default
-    inputs.noctalia-greeter.nixosModules.default
-    inputs.umbriel.nixosModules.default
-  ];
 
   # --- Noctalia Shell ---
   programs.noctalia = {
@@ -17,7 +11,7 @@
   # --- Noctalia Greeter ---
   services.displayManager.noctalia-greeter = {
     enable = true;
-    passwordless-sync-users = [ "hakanalp" ];
+    passwordlessSyncUsers = [ "hakanalp" ];
   };
 
   # --- Umbriel Window Manager ---
