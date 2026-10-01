@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
 {
   # --- GTK Theming ---
   programs.dconf.enable = true;

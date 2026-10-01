@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
 {
   # --- Noctalia Shell ---
   programs.noctalia = {
