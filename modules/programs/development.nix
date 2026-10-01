@@ -3,7 +3,7 @@
     zed-editor-fhs # Zed Editor
     nil # nil language server
     nixd # nixd language server
-    (pkgs.gpuWrap freecad) # FreeCAD
-    (pkgs.gpuWrap paraview) # Paraview Visualizer
+    # (pkgs.gpuWrap freecad) # FreeCAD
+    # (pkgs.gpuWrap paraview) # Paraview Visualizer
   ];
 }

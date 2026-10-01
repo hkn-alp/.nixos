@@ -2,10 +2,10 @@
   description = "Global Tier 3 Development Environments";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
   };
 
-  outputs = { self, nixpkgs }: 
+  outputs = { self, nixpkgs }:
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
@@ -19,7 +19,7 @@
     # ==========================================
     # 2. TOOLCHAIN VARIABLES
     # ==========================================
-    
+
     # Pure Python
     pythonToolchain = [
       (pkgs.python3.withPackages basePyPkgs)
@@ -46,7 +46,7 @@
 
   in {
     devShells.${system} = {
-      
+
       # ==========================================
       # 3. INDIVIDUAL SHELLS
       # ==========================================
@@ -60,20 +60,20 @@
       # ==========================================
       # 4. COMBINED SHELLS
       # ==========================================
-      
+
       # The Ultimate Astrodynamics Shell (Jupyter + Python + Julia)
       jupyter-julia = pkgs.mkShell {
         packages = jupyterToolchain ++ juliaToolchain;
-        
+
         # This hook runs automatically when you type 'direnv allow'
         shellHook = ''
           # Force Julia to install packages into the local project folder
           # instead of the global ~/.julia directory
           export JULIA_PROJECT="@."
-          
+
           # Force Jupyter to look for kernels in the local project
           export JUPYTER_DATA_DIR="$PWD/.jupyter"
-          
+
           echo "🚀 Jupyter-Julia Environment Activated!"
           echo "To initialize Julia packages for this specific project:"
           echo "  1. Type 'julia' to enter the REPL."

@@ -10,7 +10,7 @@
   ];
 
   networking.hostName = "Cyron";
-  time.timeZone = "Europe/Istanbul";
+  services.automatic-timezoned.enable = true;
   i18n.defaultLocale = "en_US.UTF-8";
 
   system.stateVersion = "26.05";
