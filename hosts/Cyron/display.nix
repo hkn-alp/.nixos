@@ -1,7 +1,7 @@
 { pkgs, ... }: {
 
   # Force 90Hz kernel mode for the built-in panel
-  boot.kernelParams = [ "video=eDP-1:1920x1080@90" ];
+  boot.kernelParams = [ "video=eDP-1:1920x1080MR@90" ];
 
   # Automate refresh rate based on power state
   services.udev.extraRules = ''
