@@ -4,9 +4,8 @@
     inputs.disko.nixosModules.disko
     ./hardware.nix
     ./disko.nix
-    ./nvidia.nix
     ./keyboard.nix
-    ./display.nix
+    ./nvidia.nix
     ../../modules/profiles/workstation.nix
   ];
 
