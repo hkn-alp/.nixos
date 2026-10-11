@@ -29,14 +29,14 @@
 
       # Desktop Apps
       "org.onlyoffice.desktopeditors"
-      "net.cozic.joplin_desktop"
+      # "net.cozic.joplin_desktop"
 
       # Distrobox Utilities
       # "com.ranfdev.DistroShelf"
 
       # Engineering Tools
-      "org.freecad.FreeCAD"
-      "org.paraview.ParaView"
+      # "org.freecad.FreeCAD"
+      # "org.paraview.ParaView"
     ];
 
     # Overrides
