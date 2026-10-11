@@ -29,41 +29,6 @@
     # --- LaTeX ---
     # --- LaTeX ---
     texstudio
-    (texliveMedium.withPackages (ps: with ps; [
-      # Compilation
-      latexmk
-      
-      # Explicitly declared in your preamble
-      graphics       # graphicx
-      amsmath
-      mhchem
-      siunitx
-      tools          # bundles longtable, tabularx, multicol, array
-      caption        # bundles subcaption
-      placeins
-      multirow
-      geometry
-      titlesec
-      enumitem
-      hyperref
-      booktabs
-      fontawesome5
-      parskip
-
-      # Additional math, colors, and citations
-      xcolor
-      mathtools
-      amsfonts
-      biber
-      biblatex
-
-      # AIAA Class Dependencies
-      newtx
-      microtype
-      footmisc
-      lettrine
-      quoting
-      natbib
-    ]))
+    texliveFull
   ];
 }
