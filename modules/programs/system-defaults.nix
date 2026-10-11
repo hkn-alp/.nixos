@@ -1,8 +1,8 @@
 { pkgs, ... }: {
   # 1. Global Terminal & Shell Variables
   environment.variables = {
-    EDITOR = "hx";
-    VISUAL = "hx";
+    EDITOR = "micro";
+    VISUAL = "micro";
     TERMINAL = "kitty";
     BROWSER = "firefox";
   };
