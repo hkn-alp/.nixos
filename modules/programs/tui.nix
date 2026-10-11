@@ -12,6 +12,7 @@
   environment.systemPackages = with pkgs; [
     yazi # TUI File Manager
     micro # TUI Text Editor
+    helix # TUI Editor
     gdu # TUI Disk Usage Analyzer
     fastfetch # System Information Tool
   ];

@@ -1,3 +1,4 @@
+# Location: modules/desktop/theme.nix
 { pkgs, ... }:
 {
   # --- GTK Theming ---
@@ -10,7 +11,26 @@
     style = "adwaita-dark";
   };
 
-  # --- XDG Desktop Portal (Flatpak Integration) ---
+  # --- System Fonts ---
+  fonts = {
+    packages = with pkgs; [
+      inter
+      noto-fonts
+      noto-fonts-color-emoji
+    ];
+
+    fontconfig = {
+      enable = true;
+      defaultFonts = {
+        sansSerif = [ "Inter" "Noto Sans" ];
+        serif = [ "Noto Serif" ];
+        monospace = [ "JetBrainsMono Nerd Font" ];
+        emoji = [ "Noto Color Emoji" ];
+      };
+    };
+  };
+
+  # --- XDG Desktop Portal ---
   xdg.portal = {
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
@@ -19,31 +39,15 @@
 
   # System Packages
   environment.systemPackages = with pkgs; [
-    # GTK Theme Engines
     adw-gtk3
-
-    # Papirus Icon Theme
-    # https://github.com/PapirusDevelopmentTeam/papirus-folders
-    # (papirus-icon-theme.override {
-    #   color = "yaru";
-    # })
-
-    # https://github.com/catppuccin/papirus-folders
-    # (catppuccin-papirus-folders.override {
-    #   flavor = "frappe";
-    #   accent = "maroon";
-    # })
-
-    # https://github.com/Adapta-Projects/Papirus-Nord
     (papirus-nord.override {
       accent = "polarnight3";
     })
-
-    # Qt Theme Engines
     adwaita-qt
     adwaita-qt6
   ];
 
+  # GTK & GNOME Interface Settings
   programs.dconf.profiles.user.databases = [
     {
       settings = {
@@ -51,6 +55,9 @@
           color-scheme = "prefer-dark";
           gtk-theme = "adw-gtk3-dark";
           icon-theme = "Papirus-Dark";
+          font-name = "Inter 11";
+          document-font-name = "Inter 11";
+          monospace-font-name = "JetBrainsMono Nerd Font 11";
         };
       };
     }
