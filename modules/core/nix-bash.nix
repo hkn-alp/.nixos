@@ -87,7 +87,8 @@
           echo "Packages are already up to date."
         fi
       else
-        echo "Upgrade failed! Lockfile changes were not pushed."
+        echo "Upgrade failed! Automatically rolling back to the last working state..."
+        nix-test-back
       fi
       popd > /dev/null
     }
