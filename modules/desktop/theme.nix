@@ -45,7 +45,13 @@
     })
     adwaita-qt
     adwaita-qt6
+    bibata-cursors
   ];
+
+  environment.variables = {
+    XCURSOR_THEME = "Bibata-Modern-Classic";
+    XCURSOR_SIZE = "24";
+  };
 
   # GTK & GNOME Interface Settings
   programs.dconf.profiles.user.databases = [
@@ -55,9 +61,10 @@
           color-scheme = "prefer-dark";
           gtk-theme = "adw-gtk3-dark";
           icon-theme = "Papirus-Dark";
-          font-name = "Inter 11";
-          document-font-name = "Inter 11";
+          font-name = "Noto Sans 11";
+          document-font-name = "Noto Sans 11";
           monospace-font-name = "JetBrainsMono Nerd Font 11";
+          cursor-theme = "Bibata-Modern-Classic";
         };
       };
     }
