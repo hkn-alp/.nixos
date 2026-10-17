@@ -9,4 +9,22 @@
       ExecStart = "${pkgs.kbd}/bin/setkeycodes e011 183";
     };
   };
+
+  services.keyd = {
+    enable = true;
+    keyboards = {
+      default = {
+        ids = [ "*" ]; # Applies to all attached keyboards
+        settings = {
+          main = {
+            "102nd" = "rightcontrol";
+          };
+        };
+      };
+    };
+  };
+  
+  environment.variables = {
+    XKB_DEFAULT_OPTIONS = "compose:rctrl";
+  };
 }
