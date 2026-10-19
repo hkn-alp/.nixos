@@ -69,17 +69,4 @@
       };
     }
   ];
-  systemd.user.services.sync-cursor-theme = {
-    description = "Force GTK cursor settings synchronization for Umbriel";
-    wantedBy = [ "graphical-session.target" ];
-    partOf = [ "graphical-session.target" ];
-    script = ''
-      ${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface cursor-theme 'Bibata-Modern-Classic'
-      ${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface cursor-size 24
-    '';
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-    };
-  };
 }
