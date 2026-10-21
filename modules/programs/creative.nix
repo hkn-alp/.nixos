@@ -8,6 +8,7 @@
     gimp # GNU Image Manipulation Program
     inkscape # Vector Image
     lmms-full # Audio Editor
+    losslesscut # Video/Audio Editor
     obs-studio # Screencasting & Live Streaming Software
   ];
 }
