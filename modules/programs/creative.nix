@@ -7,7 +7,7 @@
     pinta # Painting Made Simple
     gimp # GNU Image Manipulation Program
     inkscape # Vector Image
-    audacity # Audio Editor
+    lmms-full # Audio Editor
     obs-studio # Screencasting & Live Streaming Software
   ];
 }
