@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   environment.systemPackages = with pkgs; [
-    celluloid # GTK Video Player
+    showtime # GNOME Video Player
+    decibels # GNOME Audio Player
     loupe # GNOME Image Viewer
     snapshot # GNOME Camera
     gnome-sound-recorder # GNOME Sound Recorder
