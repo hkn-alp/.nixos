@@ -38,6 +38,9 @@
                   "/cache" = { mountpoint = "/home/hakanalp/.cache"; mountOptions = [ "compress=zstd" "noatime" "discard=async" ]; };
                   "/steam" = { mountpoint = "/home/hakanalp/.local/share/Steam"; mountOptions = [ "compress=zstd" "noatime" "discard=async" ]; };
                   "/containers" = { mountpoint = "/home/hakanalp/.local/share/containers"; mountOptions = [ "compress=zstd" "noatime" "discard=async" ]; };
+                  "/julia" = { mountpoint = "/home/hakanalp/.julia"; mountOptions = [ "compress=zstd" "noatime" "discard=async" ]; };
+                  "/zed" = { mountpoint = "/home/hakanalp/.local/share/zed"; mountOptions = [ "compress=zstd" "noatime" "discard=async" ]; };
+                  "/mozilla" = { mountpoint = "/home/hakanalp/.config/mozilla"; mountOptions = [ "compress=zstd" "noatime" "discard=async" ]; };
                 };
               };
             };
@@ -60,7 +63,13 @@
   systemd.tmpfiles.rules = [
     "d /home/.snapshots 0750 root users - -"
     "d /home/hakanalp/.cache 0700 hakanalp users - -"
+    "d /home/hakanalp/.config 0700 hakanalp users - -"
+    "d /home/hakanalp/.config/mozilla 0700 hakanalp users - -"
+    "d /home/hakanalp/.local 0700 hakanalp users - -"
+    "d /home/hakanalp/.local/share 0700 hakanalp users - -"
     "d /home/hakanalp/.local/share/Steam 0700 hakanalp users - -"
     "d /home/hakanalp/.local/share/containers 0700 hakanalp users - -"
+    "d /home/hakanalp/.local/share/zed 0700 hakanalp users - -"
+    "d /home/hakanalp/.julia 0700 hakanalp users - -"
   ];
 }
