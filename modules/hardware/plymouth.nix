@@ -2,11 +2,9 @@
   boot = {
     # Graphical Boot & LUKS Prompt
     plymouth.enable = true;
-    initrd.systemd.enable = true;
 
     # Silent Boot (Hide Code Flow)
     consoleLogLevel = 3;
-    initrd.verbose = false;
     kernelParams = [
       "quiet"
       "splash"
