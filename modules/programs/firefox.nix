@@ -57,6 +57,11 @@
       "browser.urlbar.suggest.quicksuggest.nonsponsored" = false;
       "browser.newtabpage.activity-stream.showSponsored" = false;
       "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+      
+      # --- CACHE STORE ---
+      "browser.cache.disk.enable" = false;
+      "browser.cache.memory.enable" = true;
+      "browser.sessionstore.interval" = 60000; # Write tab state to disk every 60s instead of 15s (cuts SSD writes by 75%)
     };
   };
 }
