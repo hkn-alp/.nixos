@@ -1,5 +1,12 @@
-{ pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 {
+  # Flake Inputs
+  imports = [
+    inputs.noctalia.nixosModules.default
+    inputs.noctalia-greeter.nixosModules.default
+    inputs.umbriel.nixosModules.default
+  ];
+  
   # --- Noctalia Shell ---
   programs.noctalia = {
     enable = true;
@@ -10,7 +17,7 @@
   # --- Noctalia Greeter ---
   services.displayManager.noctalia-greeter = {
     enable = true;
-    passwordlessSyncUsers = [ "hakanalp" ];
+    passwordless-sync-users = [ "hakanalp" ];
   };
 
   systemd.user.services.noctalia-sleep-lock = {
