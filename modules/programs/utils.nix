@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   environment.systemPackages = with pkgs; [
-    nemo
+    nautilus
     xdg-terminal-exec
     gnome-text-editor
     gnome-disk-utility
