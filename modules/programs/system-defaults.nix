@@ -11,9 +11,6 @@
   xdg.mime = {
     enable = true;
     defaultApplications = {
-      # Directories
-      "inode/directory" = "org.gnome.Nautilus.desktop";
-
       # Plain Text & Source
       "text/plain" = "org.gnome.TextEditor.desktop";
 

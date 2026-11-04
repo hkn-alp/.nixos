@@ -1,6 +1,5 @@
 { pkgs, ... }: {
   environment.systemPackages = with pkgs; [
-    dux-files
     xdg-terminal-exec
     gnome-text-editor
     gnome-disk-utility
