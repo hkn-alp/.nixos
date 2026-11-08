@@ -24,11 +24,11 @@
       # Add Flatpaks here. Anything not in this list gets deleted.
 
       # Flatpak Utilities
-      "com.github.tchx84.Flatseal"
-      "io.github.flattool.Warehouse"
+      # "com.github.tchx84.Flatseal"
+      # "io.github.flattool.Warehouse"
 
       # Desktop Apps
-      "org.onlyoffice.desktopeditors"
+      # "org.onlyoffice.desktopeditors"
       # "net.cozic.joplin_desktop"
 
       # Distrobox Utilities
