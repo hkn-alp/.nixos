@@ -1,42 +1,5 @@
 {
   "nodes": {
-    "dank-qml-common": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1793739121,
-        "narHash": "sha256-tuZawVduVTBkUo2e5SrmA5tGEVEHZiIPqbOUwA007H4=",
-        "owner": "duxlabs-dev",
-        "repo": "dux-qml-common",
-        "rev": "69971fe7203deaca031d04c434b3fcc016a2fb9e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "duxlabs-dev",
-        "repo": "dux-qml-common",
-        "type": "github"
-      }
-    },
-    "dfiles": {
-      "inputs": {
-        "dank-qml-common": "dank-qml-common",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1793746424,
-        "narHash": "sha256-xyXOKEtkKwtn2MzghakN9bECSHWnGsBzy/6Sd6K7yiw=",
-        "owner": "duxlabs-dev",
-        "repo": "dux-files",
-        "rev": "4d2d4782f1f843931346b55e9226c93766a0870e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "duxlabs-dev",
-        "repo": "dux-files",
-        "type": "github"
-      }
-    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -166,7 +129,6 @@
     },
     "root": {
       "inputs": {
-        "dfiles": "dfiles",
         "disko": "disko",
         "nix-flatpak": "nix-flatpak",
         "nixpkgs": "nixpkgs",

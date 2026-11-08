@@ -6,7 +6,6 @@
       enable = true;
       restartIfChanged = true;
     };
-    
     portal = {
       enable = true;
     };
@@ -21,4 +20,8 @@
       "org.freedesktop.impl.portal.FileChooser" = [ "dux-files" ];
     };
   };
+
+  environment.systemPackages = [
+    pkgs.dux-gop
+  ];
 }
