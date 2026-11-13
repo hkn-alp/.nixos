@@ -51,5 +51,6 @@
     wl-clipboard
     xwayland-satellite
     seahorse
+    playerctl
   ];
 }
