@@ -4,13 +4,8 @@
   services.power-profiles-daemon.enable = false;
   services.thermald.enable = true;
 
-  powerManagement.cpufreq.max = lib.mkForce null;
-  powerManagement.cpufreq.min = lib.mkForce null;
-
-  powerManagement = {
-    powertop.enable = true;
-    cpuFreqGovernor = lib.mkForce ""; 
-  };
+  powerManagement.cpuFreqGovernor = lib.mkForce null;
+  systemd.services.cpufreq.enable = false;
 
   # TLP is disabled because software charge thresholds are unsupported by this hardware ACPI
   services.tlp.enable = false;
