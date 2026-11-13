@@ -9,34 +9,22 @@
     cpuFreqGovernor = lib.mkForce ""; 
   };
 
-  services.tlp = {
-    enable = true;
-    settings = {
-      START_CHARGE_THRESH_BAT0 = 20;
-      STOP_CHARGE_THRESH_BAT0 = 85;
+  # TLP is disabled because software charge thresholds are unsupported by this hardware ACPI
+  services.tlp.enable = false;
 
-      # Keep TLP CPU management disabled so auto-cpufreq rules take effect
-      CPU_SCALING_ON_AC = "";
-      CPU_SCALING_ON_BAT = "";
-      CPU_ENERGY_PERF_POLICY_ON_AC = "";
-      CPU_ENERGY_PERF_POLICY_ON_BAT = "";
-      PLATFORM_PROFILE_ON_AC = "";
-      PLATFORM_PROFILE_ON_BAT = "";
-    };
-  };
-
+  # auto-cpufreq handles dynamic CPU performance and power saving modes seamlessly
   services.auto-cpufreq = {
     enable = true;
     settings = {
       battery = {
         governor = "powersave";
         turbo = "never";
-        energy_perf_bias = "power"; # Maximum energy saving on battery
+        energy_perf_bias = "power";
       };
       charger = {
         governor = "performance";
         turbo = "auto";
-        energy_perf_bias = "performance"; # Maximum performance on charger (0)
+        energy_perf_bias = "performance";
       };
     };
   };
