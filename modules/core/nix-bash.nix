@@ -47,8 +47,17 @@
             echo "Build successful. No git changes to commit."
           fi
         else
-          echo "Activation failed (likely a service restart issue), but the system was built successfully."
-          echo "To apply this configuration safely, reboot your machine."
+          # 1. Fallback command
+          echo "Live activation failed (likely a service issue). Falling back to boot..."
+          sudo nixos-rebuild boot --flake ".#$host"
+          
+          # 2. Force the commit and push
+          if ! git diff --cached --quiet; then
+            git commit -m "$msg (requires reboot)"
+            git pull origin main --rebase --autostash || true
+            git push origin main
+            echo "Configuration committed and pushed. Please reboot your machine to apply the changes."
+          fi
         fi
       else
         echo "Build failed! Code error detected. Nothing was pushed to GitHub."
@@ -104,9 +113,16 @@
             echo "Packages are already up to date."
           fi
         else
-          echo "Live activation failed. The generation is built and added to your boot menu."
-          echo "Reboot to apply the update. Not pushing to GitHub yet to ensure stability."
-          # We intentionally DO NOT run nix-test-back here, as it would delete the new flake.lock
+          echo "Live activation failed. Falling back to boot..."
+          sudo nixos-rebuild boot --flake ".#$host"
+          
+          git add flake.lock
+          if ! git diff --cached --quiet; then
+            git commit -m "$msg (requires reboot)"
+            git pull origin main --rebase --autostash || true
+            git push origin main
+            echo "Lockfile committed and pushed. Please reboot to apply the upgrade."
+          fi
         fi
       else
         echo "Upgrade compilation failed! Rolling back flake.lock..."
