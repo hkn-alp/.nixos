@@ -4,6 +4,9 @@
   services.power-profiles-daemon.enable = false;
   services.thermald.enable = true;
 
+  powerManagement.cpufreq.max = lib.mkForce null;
+  powerManagement.cpufreq.min = lib.mkForce null;
+
   powerManagement = {
     powertop.enable = true;
     cpuFreqGovernor = lib.mkForce ""; 
