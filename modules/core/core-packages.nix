@@ -7,7 +7,6 @@
     git
     unzip
     ripgrep
-    btop
     pciutils
     usbutils
   ];
