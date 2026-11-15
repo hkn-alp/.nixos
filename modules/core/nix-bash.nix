@@ -1,5 +1,35 @@
 { config, pkgs, ... }: {
   programs.bash.interactiveShellInit = ''
+    _retry_git_push() {
+      if git push origin main; then
+        return 0
+      else
+        echo -e "\nERROR: git push failed. (Likely the Wayland SSH agent refusing operation)"
+        read -p "Would you like to secure the key, authorize it via CLI, and retry? (y/N): " retry_ans
+        if [[ "$retry_ans" =~ ^[Yy]$ ]]; then
+          echo "1. Securing key permissions (chmod 600)..."
+          chmod 600 ~/.ssh/id_ed25519
+          
+          echo "2. Forcing manual passphrase prompt..."
+          ssh-add ~/.ssh/id_ed25519
+          
+          echo "3. Verifying GitHub access..."
+          # GitHub returns exit code 1 even on success, so we grep the output text instead
+          if ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
+            echo "GitHub authentication successful! Retrying push..."
+            git push origin main
+            return $?
+          else
+            echo "GitHub authentication failed. You will need to check your keys manually."
+            return 1
+          fi
+        else
+          echo "Skipping push. You will need to manually push later."
+          return 1
+        fi
+      fi
+    }
+
     nix-test() {
       local host=$(hostname)
       pushd ~/.nixos > /dev/null
@@ -32,31 +62,33 @@
       git add -A
 
       echo "Building local configuration..."
-      # 1. Build first to catch compilation errors
       if sudo nixos-rebuild build --flake ".#$host"; then
         echo "Build successful! Activating live system..."
         
-        # 2. Attempt live switch
         if sudo nixos-rebuild switch --flake ".#$host"; then
           if ! git diff --cached --quiet; then
             git commit -m "$msg"
             git pull origin main --rebase --autostash || true
-            git push origin main
-            echo "Build successful. Known-good configuration pushed to GitHub."
+            if _retry_git_push; then
+              echo "Build successful. Known-good configuration pushed to GitHub."
+            else
+              echo "ERROR: Build and commit successful, but git push failed! Configuration is only local."
+            fi
           else
             echo "Build successful. No git changes to commit."
           fi
         else
-          # 1. Fallback command
           echo "Live activation failed (likely a service issue). Falling back to boot..."
           sudo nixos-rebuild boot --flake ".#$host"
           
-          # 2. Force the commit and push
           if ! git diff --cached --quiet; then
             git commit -m "$msg (requires reboot)"
             git pull origin main --rebase --autostash || true
-            git push origin main
-            echo "Configuration committed and pushed. Please reboot your machine to apply the changes."
+            if _retry_git_push; then
+              echo "Configuration committed and pushed. Please reboot your machine to apply the changes."
+            else
+              echo "ERROR: Configuration committed locally, but git push failed! Please reboot and manually push later."
+            fi
           fi
         fi
       else
@@ -73,8 +105,11 @@
 
       echo "Applying reverted configuration..."
       if sudo nixos-rebuild switch --flake ".#$host"; then
-        git push origin main
-        echo "Rollback successful and pushed to GitHub."
+        if _retry_git_push; then
+          echo "Rollback successful and pushed to GitHub."
+        else
+          echo "ERROR: Rollback applied locally, but git push failed!"
+        fi
       else
         echo "Rollback failed. You may need to fix conflicts manually."
       fi
@@ -86,7 +121,6 @@
       local host=$(hostname)
       local action="switch"
 
-      # Allow passing --boot for major upgrades
       if [[ "$1" == "--boot" ]]; then
         action="boot"
       elif [[ "$1" == "-m" && -n "$2" ]]; then
@@ -98,7 +132,6 @@
       nix flake update
 
       echo "Building the new generation..."
-      # Separate build from activation to prevent false-failures destroying the lockfile
       if sudo nixos-rebuild build --flake ".#$host"; then
         echo "Build successful! Attempting system $action..."
         
@@ -107,8 +140,11 @@
           if ! git diff --cached --quiet; then
             git commit -m "$msg"
             git pull origin main --rebase --autostash || true
-            git push origin main
-            echo "System upgraded successfully. New lockfile pushed to GitHub."
+            if _retry_git_push; then
+              echo "System upgraded successfully. New lockfile pushed to GitHub."
+            else
+              echo "ERROR: System upgraded and lockfile committed locally, but git push failed!"
+            fi
           else
             echo "Packages are already up to date."
           fi
@@ -120,8 +156,11 @@
           if ! git diff --cached --quiet; then
             git commit -m "$msg (requires reboot)"
             git pull origin main --rebase --autostash || true
-            git push origin main
-            echo "Lockfile committed and pushed. Please reboot to apply the upgrade."
+            if _retry_git_push; then
+              echo "Lockfile committed and pushed. Please reboot to apply the upgrade."
+            else
+              echo "ERROR: Lockfile committed locally, but git push failed! Please reboot and push manually."
+            fi
           fi
         fi
       else
