@@ -4,7 +4,7 @@
     gnome-text-editor
     resources
     lm_sensors
-    baobab
+    gnome-disk-utility
   ];
   
   services.gvfs.enable = true;

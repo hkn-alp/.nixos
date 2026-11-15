@@ -82,5 +82,6 @@
     mangohud
     # Games
     (pkgs.gpuWrap supertuxkart)
+    (pkgs.gpuWrap luanti)
   ];
 }
