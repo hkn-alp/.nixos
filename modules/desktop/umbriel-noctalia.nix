@@ -50,11 +50,6 @@
       umbriel."org.freedesktop.impl.portal.FileChooser" = lib.mkForce [ "luciole" ];
     };
   };
-  
-  environment.variables = {
-    GTK_USE_PORTAL = "1";
-    GDK_DEBUG = "portals";
-  };
 
   # Force Software Rendering and Qt Theme Engine Runtime Variables
   environment.variables = {
