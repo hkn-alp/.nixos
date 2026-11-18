@@ -5,6 +5,7 @@
     inputs.noctalia.nixosModules.default
     inputs.noctalia-greeter.nixosModules.default
     inputs.umbriel.nixosModules.default
+    inputs.luciole.nixosModules.default
   ];
   
   # --- Noctalia Shell ---
@@ -48,6 +49,7 @@
 
   # System Packages
   environment.systemPackages = with pkgs; [
+    inputs.luciole.packages.${pkgs.system}.default
     wl-clipboard
     xwayland-satellite
     seahorse

@@ -19,6 +19,7 @@
     noctalia.url = "github:noctalia-dev/noctalia/cachix";
     noctalia-greeter.url = "github:noctalia-dev/noctalia-greeter";
     umbriel.url = "github:noctalia-dev/umbriel";
+    luciole.url = "github:noctalia-dev/luciole";
   };
 
   outputs = { self, nixpkgs, ... }@inputs: {
