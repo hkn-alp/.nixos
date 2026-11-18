@@ -11,6 +11,9 @@
   xdg.mime = {
     enable = true;
     defaultApplications = {
+      # File Manager
+      "inode/directory" = "luciole.desktop";
+      
       # Plain Text & Source
       "text/plain" = "org.gnome.TextEditor.desktop";
 
@@ -18,7 +21,7 @@
       "text/html" = "firefox.desktop";
       "x-scheme-handler/http" = "firefox.desktop";
       "x-scheme-handler/https" = "firefox.desktop";
-      "application/pdf" = "org.gnome.Papers.desktop"; # Matches 'papers' in productivity.nix
+      "application/pdf" = "org.gnome.Papers.desktop";
 
       # Media
       "image/png" = "org.gnome.Loupe.desktop";
