@@ -39,6 +39,9 @@
   # --- Umbriel Window Manager ---
   programs.umbriel.enable = true;
 
+  # --- Luciole File Manager ---
+  programs.luciole.enable = true;
+
   # Force Software Rendering and Qt Theme Engine Runtime Variables
   environment.variables = {
     WLR_RENDERER_ALLOW_SOFTWARE = "1";
@@ -49,7 +52,6 @@
 
   # System Packages
   environment.systemPackages = with pkgs; [
-    inputs.luciole.packages.${pkgs.system}.default
     wl-clipboard
     xwayland-satellite
     seahorse
