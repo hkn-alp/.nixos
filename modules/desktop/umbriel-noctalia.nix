@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, lib, inputs, ... }:
 {
   # Flake Inputs
   imports = [
@@ -45,8 +45,9 @@
   xdg.portal = {
     enable = true;
     extraPortals = [ config.programs.luciole.package ];
-    config.common = {
-      "org.freedesktop.impl.portal.FileChooser" = [ "luciole" ];
+    config = {
+      common."org.freedesktop.impl.portal.FileChooser" = lib.mkForce [ "luciole" ];
+      umbriel."org.freedesktop.impl.portal.FileChooser" = lib.mkForce [ "luciole" ];
     };
   };
   
