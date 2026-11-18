@@ -42,15 +42,6 @@
   # --- Luciole File Manager ---
   programs.luciole.enable = true;
   
-  xdg.portal = {
-    enable = true;
-    extraPortals = [ config.programs.luciole.package ];
-    config = {
-      common."org.freedesktop.impl.portal.FileChooser" = lib.mkForce [ "luciole" ];
-      umbriel."org.freedesktop.impl.portal.FileChooser" = lib.mkForce [ "luciole" ];
-    };
-  };
-  
   environment.variables = {
     GTK_USE_PORTAL = "1";
     GDK_DEBUG = "portals";
