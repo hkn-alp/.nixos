@@ -41,6 +41,14 @@
 
   # --- Luciole File Manager ---
   programs.luciole.enable = true;
+  
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ config.programs.luciole.package ];
+    config.common = {
+      "org.freedesktop.impl.portal.FileChooser" = [ "luciole" ];
+    };
+  };
 
   # Force Software Rendering and Qt Theme Engine Runtime Variables
   environment.variables = {
