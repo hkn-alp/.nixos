@@ -1,4 +1,32 @@
 { pkgs, ... }: {
+  # Packages
+  environment.systemPackages = with pkgs; [
+    kitty # Terminal Emulator
+    yazi # TUI File Manager
+    micro # TUI Text Editor
+    gdu # TUI Disk Usage Analyzer
+    fastfetch # System Information Tool
+    btop-cuda # System Monitor
+    lm_sensors # Sensor Reading 
+  ];
+  
+  # Kitty configuration
+  environment.etc."xdg/kitty/kitty.conf".text = ''
+    # Font
+    font_family JetBrainsMono Nerd Font
+    bold_font auto
+    italic_font auto
+    bold_italic_font auto
+    font_size 11.0
+
+    # Window
+    window_padding_width 12
+    confirm_os_window_close 0
+    background_opacity 0.75
+    background_blur 1
+  '';
+  
+  # Starship
   programs.starship = {
     enable = true;
     enableBashIntegration = true;

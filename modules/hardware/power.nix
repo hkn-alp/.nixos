@@ -1,4 +1,3 @@
-# Location: modules/hardware/power.nix
 { lib, ... }: {
   services.upower.enable = true;
   services.power-profiles-daemon.enable = false;

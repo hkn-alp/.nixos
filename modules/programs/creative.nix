@@ -6,5 +6,13 @@
     gimp # GNU Image Manipulation Program
     inkscape # Vector Image
     obs-studio # Screencasting & Live Streaming Software
+    
+    # Artcraft Suite
+    photocraft
+    (pkgs.gpuWrap vectorcraft)
+    pdfcraft
+    wordcraft
+    deckcraft
+    gridcraft
   ];
 }
