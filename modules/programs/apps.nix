@@ -3,7 +3,6 @@
     signal-desktop
     spotify
     joplin-desktop
-    system-config-printer
   ];
 
   # --- Local File Transfer (LocalSend) ---
