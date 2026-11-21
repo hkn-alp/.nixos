@@ -1,7 +1,6 @@
 { pkgs, ... }: {
   environment.systemPackages = with pkgs; [
-    (pkgs.gpuWrap blender) # Blender with GPU wrapper
-    # (pkgs.gpuWrap davinci-resolve) # DaVinci Resolve with GPU wrapper
+    (gpuWrap blender) # Blender with GPU wrapper
     lorien # Infinite Canvas Note Taking App
     gimp # GNU Image Manipulation Program
     inkscape # Vector Image
@@ -9,7 +8,7 @@
     
     # Artcraft Suite
     photocraft
-    (pkgs.gpuWrap vectorcraft)
+    (gpuWrap vectorcraft)
     pdfcraft
     wordcraft
     deckcraft
