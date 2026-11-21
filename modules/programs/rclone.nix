@@ -125,14 +125,13 @@
     serviceConfig = {
       Type = "oneshot";
       EnvironmentFile = "%h/.config/rclone/bisync-%i.env";
-      ExecStart = "${pkgs.rclone}/bin/rclone bisync \${REMOTE_PATH} %h/Rclone/\${SYNC_DIR} --verbose --conflict-resolve newer";
+      ExecStart = "${pkgs.rclone}/bin/rclone bisync \${REMOTE_PATH} %h/Rclone/\${SYNC_DIR} --verbose --conflict-resolve newer --resilient --recover";
     };
   };
 
   # --- SYSTEMD TIMER TEMPLATE ---
   systemd.user.timers."rclone-bisync@" = {
     description = "Timer for automated rclone bisync (%i)";
-    wantedBy = [ "timers.target" ];
     timerConfig = {
       OnBootSec = "3m";
       OnUnitActiveSec = "5m";
