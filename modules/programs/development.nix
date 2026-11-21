@@ -10,10 +10,13 @@
   
   environment.systemPackages = with pkgs; [
     zed-editor-fhs # Zed Editor
-    nil # nil language server
-    nixd # nixd language server
     (pkgs.gpuWrap freecad) # FreeCAD
     (pkgs.gpuWrap paraview) # Paraview Visualizer
+    texstudio # LaTeX IDE
+    
+    # Language Servers
+    nil # nil language server
+    nixd # nixd language server
     
     # --- Python & Jupyter ---
     (python3.withPackages (ps: with ps; [
@@ -37,6 +40,5 @@
 
     # --- LaTeX ---
     texliveFull
-    texstudio
   ];
 }
