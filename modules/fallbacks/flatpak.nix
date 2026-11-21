@@ -4,7 +4,7 @@
   services.flatpak = {
     enable = true;
 
-    # Force strict declarative mode: wipe any imperative CLI installs on rebuild
+    # Force strict declarative mode: wipe any imperative installs on rebuild
     uninstallUnmanaged = true;
 
     update = {
@@ -37,9 +37,6 @@
       # Engineering Tools
       # "org.freecad.FreeCAD"
       # "org.paraview.ParaView"
-      
-      # Zotero
-      "org.zotero.Zotero"
     ];
 
     # Overrides
