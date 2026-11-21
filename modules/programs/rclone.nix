@@ -3,7 +3,7 @@
 {
   environment.systemPackages = [
     pkgs.rclone
-    
+
     # --- SETUP SCRIPT ---
     (pkgs.writeShellScriptBin "nix-rclone-setup" ''
       #!/usr/bin/env bash
@@ -41,9 +41,9 @@
       SYNC_DIR="$BASE_DIR/$DIR_NAME"
       ENV_DIR="$HOME/.config/rclone"
       ENV_FILE="$ENV_DIR/bisync-$DIR_NAME.env"
+      WANTS_DIR="$HOME/.config/systemd/user/timers.target.wants"
 
-      mkdir -p "$SYNC_DIR"
-      mkdir -p "$ENV_DIR"
+      mkdir -p "$SYNC_DIR" "$ENV_DIR" "$WANTS_DIR"
 
       echo "1. Checking authentication for '$REMOTE'..."
       if ! ${pkgs.rclone}/bin/rclone listremotes | grep -q "^$REMOTE:"; then
@@ -55,7 +55,7 @@
       if [ ! -f "$ENV_FILE" ]; then
         echo "First run detected. Performing initial --resync. This may take a while..."
         ${pkgs.rclone}/bin/rclone bisync "$REMOTE_PATH" "$SYNC_DIR" --resync --verbose
-        
+
         # Write environment variables for the systemd template to read
         echo "REMOTE_PATH=$REMOTE_PATH" > "$ENV_FILE"
         echo "SYNC_DIR=$DIR_NAME" >> "$ENV_FILE"
@@ -64,8 +64,11 @@
       fi
 
       echo "3. Starting background sync service for $DIR_NAME..."
-      systemctl --user enable --now "rclone-bisync@$DIR_NAME.timer"
-      
+      # Symlink directly to /etc/systemd/user/ so GC never breaks the link
+      ln -sf "/etc/systemd/user/rclone-bisync@.timer" "$WANTS_DIR/rclone-bisync@$DIR_NAME.timer"
+      systemctl --user daemon-reload
+      systemctl --user start "rclone-bisync@$DIR_NAME.timer"
+
       echo "Setup complete! '$REMOTE_PATH' is actively syncing to '$SYNC_DIR'."
     '')
 
@@ -76,6 +79,7 @@
 
       DIR_NAME=""
       REMOVE_ALL=false
+      WANTS_DIR="$HOME/.config/systemd/user/timers.target.wants"
 
       # Parse command line flags
       while [[ $# -gt 0 ]]; do
@@ -92,11 +96,14 @@
           [ -e "$env_file" ] || continue
           name=$(basename "$env_file" .env)
           dir_name=''${name#bisync-}
-          
-          systemctl --user disable --now "rclone-bisync@$dir_name.timer" 2>/dev/null || true
-          rm -f "$env_file"
+
+          systemctl --user stop "rclone-bisync@$dir_name.timer" 2>/dev/null || true
+          rm -f "$WANTS_DIR/rclone-bisync@$dir_name.timer" \
+                "$HOME/.config/systemd/user/rclone-bisync@$dir_name.timer" \
+                "$env_file"
           echo "✅ Disabled sync for: $dir_name"
         done
+        systemctl --user daemon-reload
         echo "All background syncs stopped. Your local files in ~/Rclone/ were NOT deleted."
         exit 0
       fi
@@ -107,9 +114,12 @@
       fi
 
       echo "Stopping background sync for $DIR_NAME..."
-      systemctl --user disable --now "rclone-bisync@$DIR_NAME.timer" 2>/dev/null || true
-      rm -f "$HOME/.config/rclone/bisync-$DIR_NAME.env"
-      
+      systemctl --user stop "rclone-bisync@$DIR_NAME.timer" 2>/dev/null || true
+      rm -f "$WANTS_DIR/rclone-bisync@$DIR_NAME.timer" \
+            "$HOME/.config/systemd/user/rclone-bisync@$DIR_NAME.timer" \
+            "$HOME/.config/rclone/bisync-$DIR_NAME.env"
+      systemctl --user daemon-reload
+
       echo "✅ Removed background sync for $DIR_NAME."
       echo "Note: Your local files are kept at ~/Rclone/$DIR_NAME."
     '')
