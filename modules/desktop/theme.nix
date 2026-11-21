@@ -11,25 +11,6 @@
     style = "adwaita-dark";
   };
 
-  # --- System Fonts ---
-  fonts = {
-    packages = with pkgs; [
-      inter
-      noto-fonts
-      noto-fonts-color-emoji
-    ];
-
-    fontconfig = {
-      enable = true;
-      defaultFonts = {
-        sansSerif = [ "Inter" "Noto Sans" ];
-        serif = [ "Noto Serif" ];
-        monospace = [ "JetBrainsMono Nerd Font" ];
-        emoji = [ "Noto Color Emoji" ];
-      };
-    };
-  };
-
   # --- XDG Desktop Portal ---
   xdg.portal = {
     enable = true;
@@ -61,9 +42,6 @@
           color-scheme = "prefer-dark";
           gtk-theme = "adw-gtk3-dark";
           icon-theme = "Papirus-Dark";
-          font-name = "Noto Sans 11";
-          document-font-name = "Noto Sans 11";
-          monospace-font-name = "JetBrainsMono Nerd Font 11";
           cursor-theme = "Bibata-Modern-Classic";
         };
       };

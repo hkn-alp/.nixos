@@ -37,6 +37,9 @@
       # Engineering Tools
       # "org.freecad.FreeCAD"
       # "org.paraview.ParaView"
+      
+      # Zotero
+      "org.zotero.Zotero"
     ];
 
     # Overrides

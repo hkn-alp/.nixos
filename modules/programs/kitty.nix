@@ -1,13 +1,7 @@
 { pkgs, ... }: {
   # --- Terminal Emulator ---
   environment.systemPackages = [ pkgs.kitty ];
-
-  # --- JetBrains Mono Nerd Font ---
-  fonts.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono
-    nerd-fonts.symbols-only
-  ];
-
+  
   # --- System-wide deployment of Kitty configuration
   environment.etc."xdg/kitty/kitty.conf".text = ''
     # Font
