@@ -7,9 +7,9 @@
     gdu # TUI Disk Usage Analyzer
     fastfetch # System Information Tool
     btop-cuda # System Monitor
-    lm_sensors # Sensor Reading 
+    lm_sensors # Sensor Reading
   ];
-  
+
   # Kitty configuration
   environment.etc."xdg/kitty/kitty.conf".text = ''
     # Font
@@ -25,7 +25,7 @@
     background_opacity 0.75
     background_blur 1
   '';
-  
+
   # Starship
   programs.starship = {
     enable = true;
@@ -132,5 +132,59 @@
         error_symbol = "[➜](bold red) ";
       };
     };
+  };
+
+  # Fastfetch configuration
+  environment.etc."xdg/fastfetch/config.jsonc".text = builtins.toJSON {
+    "$schema" = "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json";
+    display = {
+      key = {
+        type = "both"; # Prints built-in Nerd Font icon + key name
+      };
+    };
+    modules = [
+      "title"
+      "separator"
+
+      # --- Software ---
+      { type = "custom"; format = "{#1;34}╭── Software ──{#}"; }
+      { type = "os"; keyIcon = ""; }
+      "kernel"
+      { type = "disk"; key = "OS Age"; keyIcon = "󰃭"; folders = "/"; format = "{create-time:10} ({days} days)"; }
+      "uptime"
+      "packages"
+      "shell"
+      "locale"
+      "datetime"
+
+      "break"
+
+      # --- Desktop ---
+      { type = "custom"; format = "{#1;36}╭── Desktop ──{#}"; }
+      "wm"
+      "theme"
+      "icons"
+      "font"
+      "cursor"
+      "terminal"
+      "terminalfont"
+
+      "break"
+
+      # --- Hardware ---
+      { type = "custom"; format = "{#1;33}╭── Hardware ──{#}"; }
+      "host"
+      "cpu"
+      "gpu"
+      "display"
+      "memory"
+      "swap"
+      "disk"
+      "battery"
+      "localip"
+
+      "break"
+      "colors"
+    ];
   };
 }
