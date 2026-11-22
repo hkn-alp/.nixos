@@ -12,9 +12,30 @@
 
   programs.fish = {
       enable = true;
-      # Removes the default "Welcome to fish..." message on every new terminal
+
+      # Simple 1-to-1 abbreviations
+      shellAbbrs = {
+        gs = "git status";
+        ga = "git add -A";
+        gc = "git commit -m";
+        gp = "git push";
+        nd = "nix-deploy -m";
+        nt = "nix-test";
+        ntb = "nix-test-back";
+        nu = "nix-upgrade";
+        nub = "nix-upgrade --boot";
+        nc = "nix-clean";
+        y = "yazi";
+        ff = "fastfetch";
+      };
+
       interactiveShellInit = ''
+        # Removes the default "Welcome to fish..." message on every new terminal
         set fish_greeting
+
+        # Cursor-placement abbreviations (places cursor where % is)
+        abbr -a --set-cursor nd 'nix-deploy -m "%"'
+        abbr -a --set-cursor gc 'git commit -m "%"'
       '';
   };
 

@@ -175,6 +175,34 @@ let
     fi
     popd > /dev/null
   '';
+
+  nix-clean = pkgs.writeShellScriptBin "nix-clean" ''
+      echo "1. Deploying current configuration..."
+      if ! nix-deploy "$@"; then
+        echo "ERROR: nix-deploy failed. Aborting cleanup to preserve rollback generations."
+        exit 1
+      fi
+
+      echo "2. Deleting old system and user generations + collecting garbage..."
+      sudo nix-collect-garbage -d
+      nix-collect-garbage -d
+
+      echo "3. Resetting current generation to #1..."
+      current_target=$(readlink -f /nix/var/nix/profiles/system)
+      current_link=$(readlink /nix/var/nix/profiles/system)
+
+      if [[ "$current_link" != "system-1-link" ]]; then
+        sudo ln -sfn "$current_target" /nix/var/nix/profiles/system-1-link
+        sudo ln -sfn system-1-link /nix/var/nix/profiles/system
+        sudo rm -f "/nix/var/nix/profiles/$current_link"
+      fi
+
+      echo "4. Updating boot menu..."
+      sudo /run/current-system/bin/switch-to-configuration boot
+
+      echo "5. Current system generations:"
+      sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
+    '';
 in
 {
   environment.systemPackages = [
@@ -183,5 +211,6 @@ in
     nix-deploy
     nix-deploy-back
     nix-upgrade
+    nix-clean
   ];
 }
