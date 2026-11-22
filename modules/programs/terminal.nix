@@ -10,8 +10,18 @@
     lm_sensors # Sensor Reading
   ];
 
+  programs.fish = {
+      enable = true;
+      # Removes the default "Welcome to fish..." message on every new terminal
+      interactiveShellInit = ''
+        set fish_greeting
+      '';
+  };
+
   # Kitty configuration
   environment.etc."xdg/kitty/kitty.conf".text = ''
+    # Shell
+    shell fish
     # Font
     font_family JetBrainsMono Nerd Font
     bold_font auto
@@ -30,6 +40,7 @@
   programs.starship = {
     enable = true;
     enableBashIntegration = true;
+    enableFishIntegration = true;
 
     presets = [ "nerd-font-symbols" "pastel-powerline" ];
 
