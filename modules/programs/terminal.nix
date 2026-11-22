@@ -154,10 +154,10 @@
     };
     modules = [
       "title"
-      "seperator"
+      "separator"
 
       # --- Software ---
-      { type = "custom"; format = "{#1;34}╭── Software ──{#}"; }
+      { type = "custom"; format = "{#1;34}╭── Software ───{#}"; }
       { type = "os"; keyIcon = ""; }
       "kernel"
       { type = "disk"; key = "OS Age"; keyIcon = "󰃭"; folders = "/"; format = "{create-time:10} ({days} days)"; }
@@ -173,7 +173,7 @@
       "break"
 
       # --- Desktop ---
-      { type = "custom"; format = "{#1;36}╭── Desktop ──{#}"; }
+      { type = "custom"; format = "{#1;36}╭── Desktop ───{#}"; }
       { type = "wm"; key = "WM"; }
       "theme"
       "icons"
@@ -185,7 +185,7 @@
       "break"
 
       # --- Hardware ---
-      { type = "custom"; format = "{#1;33}╭── Hardware ──{#}"; }
+      { type = "custom"; format = "{#1;33}╭── Hardware ───{#}"; }
       "host"
       "cpu"
       "gpu"
