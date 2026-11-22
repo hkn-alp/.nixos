@@ -20,7 +20,7 @@
     font_size 11.0
 
     # Window
-    window_padding_width 12
+    window_padding_width 10
     confirm_os_window_close 0
     background_opacity 0.75
     background_blur 1
@@ -137,14 +137,24 @@
   # Fastfetch configuration
   environment.etc."xdg/fastfetch/config.jsonc".text = builtins.toJSON {
     "$schema" = "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json";
+    logo = {
+      padding = {
+        top = 1;
+        left = 0;
+        right = 1;
+      };
+    };
     display = {
       key = {
-        type = "both"; # Prints built-in Nerd Font icon + key name
+        type = "both"; # Built-in Nerd Font icon + key name
+      };
+      freq = {
+        spaceBeforeUnit = "never";
       };
     };
     modules = [
       "title"
-      "separator"
+      "seperator"
 
       # --- Software ---
       { type = "custom"; format = "{#1;34}╭── Software ──{#}"; }
@@ -152,7 +162,10 @@
       "kernel"
       { type = "disk"; key = "OS Age"; keyIcon = "󰃭"; folders = "/"; format = "{create-time:10} ({days} days)"; }
       "uptime"
-      "packages"
+      {
+        type = "packages";
+        format = "{?flatpak-all} {flatpak-all} (flatpak), {?}{?nix-system} {nix-system} (nix-system){?}";
+      }
       "shell"
       "locale"
       "datetime"
@@ -161,13 +174,13 @@
 
       # --- Desktop ---
       { type = "custom"; format = "{#1;36}╭── Desktop ──{#}"; }
-      "wm"
+      { type = "wm"; key = "WM"; }
       "theme"
       "icons"
       "font"
       "cursor"
       "terminal"
-      "terminalfont"
+      { type = "terminalfont"; key = "Term Font"; }
 
       "break"
 
