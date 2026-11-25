@@ -53,6 +53,8 @@
       "browser.ping-centre.telemetry" = false;
 
       # --- UI CLEANUP ---
+      "browser.tabs.inTitlebar" = 0; # Enable system title bar
+      "browser.display.use_system_colors" = false; # Stop web content from inheriting GTK colors
       "browser.urlbar.suggest.quicksuggest.sponsored" = false;
       "browser.urlbar.suggest.quicksuggest.nonsponsored" = false;
       "browser.newtabpage.activity-stream.showSponsored" = false;
