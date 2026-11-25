@@ -44,7 +44,20 @@
           icon-theme = "Papirus-Dark";
           cursor-theme = "Bibata-Modern-Classic";
         };
+        "org/gnome/desktop/wm/preferences" = {
+          button-layout = ":"; # Strips close/min/max buttons from GTK3 & GTK4 headerbars
+        };
       };
     }
   ];
+  
+  # Fallback for GTK apps that read settings.ini directly instead of dconf
+  environment.etc."xdg/gtk-3.0/settings.ini".text = ''
+    [Settings]
+    gtk-decoration-layout=:
+  '';
+  environment.etc."xdg/gtk-4.0/settings.ini".text = ''
+    [Settings]
+    gtk-decoration-layout=:
+  '';
 }
