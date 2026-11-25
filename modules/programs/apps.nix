@@ -3,6 +3,10 @@
     signal-desktop
     spotify
     joplin-desktop
+    
+    # Games
+    (pkgs.gpuWrap supertuxkart)
+    (pkgs.gpuWrap luanti)
   ];
 
   # --- Local File Transfer (LocalSend) ---

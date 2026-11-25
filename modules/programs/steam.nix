@@ -79,9 +79,5 @@
 
   environment.systemPackages = with pkgs; [
     steam-run
-    mangohud
-    # Games
-    (pkgs.gpuWrap supertuxkart)
-    (pkgs.gpuWrap luanti)
   ];
 }

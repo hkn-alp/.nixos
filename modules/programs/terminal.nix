@@ -8,6 +8,7 @@
     fastfetch # System Information Tool
     btop-cuda # System Monitor
     lm_sensors # Sensor Reading
+    mangohud # App Performance Reading
   ];
 
   programs.fish = {
