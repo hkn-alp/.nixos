@@ -4,9 +4,8 @@
     enable32Bit = true;
 
     extraPackages = with pkgs; [
-      intel-media-driver # Modern Intel iGPUs
-      intel-vaapi-driver # Older Intel iGPUs (fallback)
-      libvdpau-va-gl
+      intel-media-driver # Modern Intel iGPUs (12th Gen)
+      vpl-gpu-rt         # Intel QuickSync / oneVPL media acceleration
     ];
   };
 
@@ -16,7 +15,7 @@
     modesetting.enable = true;
     powerManagement.enable = true;
     powerManagement.finegrained = true;
-    open = false;
+    open = true;
     nvidiaSettings = false;
 
     package = config.boot.kernelPackages.nvidiaPackages.production;
